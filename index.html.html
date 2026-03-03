@@ -182,6 +182,25 @@ body {
 }
 
 /* ═══════════════════════════════════════════
+   READING PROGRESS BAR
+═══════════════════════════════════════════ */
+#reading-progress {
+  position: sticky;
+  top: 72px; /* header height */
+  z-index: 99;
+  height: 4px;
+  background: rgba(139,26,26,0.10);
+  width: 100%;
+  display: none; /* only show on article page */
+}
+#reading-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--crimson);
+  transition: width 0.08s linear;
+}
+
+/* ═══════════════════════════════════════════
    SHARED SECTION STYLES
 ═══════════════════════════════════════════ */
 .section-wrap { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
@@ -239,6 +258,40 @@ body {
 .btn-gold:hover { background: var(--crimson); color: #fff; }
 .btn-outline-white { background: transparent; color: var(--crimson); border-color: rgba(139,26,26,0.4); }
 .btn-outline-white:hover { border-color: var(--crimson); color: var(--crimson); background: rgba(139,26,26,0.08); }
+
+/* ═══════════════════════════════════════════
+   ARTICLE DETAIL TYPOGRAPHY (Drop caps + Dividers)
+═══════════════════════════════════════════ */
+#article-content p { margin-bottom: 22px; }
+#article-content ul, #article-content ol { margin-bottom: 22px; }
+#article-content li { margin-bottom: 8px; }
+
+/* Drop cap on the first paragraph only */
+#article-content p:first-of-type::first-letter {
+  float: left;
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 3.6rem;
+  line-height: 0.9;
+  margin: 0.12em 0.14em 0 0;
+  color: var(--crimson);
+}
+#article-content p:first-of-type { margin-top: 6px; }
+
+/* Subtle divider lines between major sections (h3) */
+#article-content h3 {
+  margin: 42px 0 14px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(139,26,26,0.18);
+  font-family: 'Playfair Display', serif;
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--warm-white);
+}
+#article-content h3:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
 
 /* ═══════════════════════════════════════════
    ██ HOME PAGE
@@ -1183,6 +1236,7 @@ footer { background: #2a0808; border-top-color: rgba(139,26,26,0.3); }
 .hero-card h3 { color: #1a1008; }
 .hero-card p { color: #6a5a4a; }
 .hero-card-meta { color: #9a8a7a; }
+
 </style>
 </head>
 <body>
@@ -1195,7 +1249,6 @@ footer { background: #2a0808; border-top-color: rgba(139,26,26,0.3); }
 
 <!-- HEADER -->
 <header class="site-header">
-
   <div class="header-inner">
 
     <!-- LOGO -->
@@ -1233,6 +1286,11 @@ footer { background: #2a0808; border-top-color: rgba(139,26,26,0.3); }
 
   </div>
 </header>
+
+<!-- Reading progress bar (only shown on article page) -->
+<div id="reading-progress" aria-hidden="true">
+  <div id="reading-progress-bar"></div>
+</div>
 
 <!-- ══════════════════════════════════════
      HOME PAGE
@@ -1844,8 +1902,6 @@ footer { background: #2a0808; border-top-color: rgba(139,26,26,0.3); }
 </div>
 
 
-<!-- FOOTER (shared) -->
-
 <!-- ══════════════════════════════════════
      ARTICLE DETAIL PAGE
 ════════════════════════════════════════════ -->
@@ -1861,7 +1917,7 @@ footer { background: #2a0808; border-top-color: rgba(139,26,26,0.3); }
       <div style="margin-bottom:18px;">
         <a class="btn btn-outline-white" onclick="showPage('articles')" style="padding:10px 18px;">← Back to Articles</a>
       </div>
-      <h3>The Israel Factor Is Policy Reality — And It Must Not Become Autopilot</h3>
+      <div id="article-content" style="font-size:1.1rem;line-height:1.9;color: var(--text-body);">
         <!-- Article content loads here -->
       </div>
     </div>
@@ -1935,9 +1991,9 @@ const articles = {
     content: `
       <p><strong>The White House says Operation “Epic Fury” is a precise campaign to eliminate an “imminent” threat.</strong> If that’s true, the evidence should be clear enough to show the American people. Instead, politicians and their media machines continue to blindly tell the public that the country was in danger, and action needed to be taken.</p>
 
-      <p>“America First” is not measured by how quickly we can escalate into action. It’s measured by whether American citizens are safer and better off when the dust settles — and whether the costs are justified <em>before</em> the bill comes due. This includes having a White House that transparently shows the cost, reasoning, and benefit. </p>
+      <p>“America First” is not measured by how quickly we can escalate into action. It’s measured by whether American citizens are safer and better off when the dust settles — and whether the costs are justified <em>before</em> the bill comes due. This includes having a White House that transparently shows the cost, reasoning, and benefit.</p>
 
-      <p><strong> The “imminent threat” claim needs more than repetition</strong></p>
+      <h3>The “imminent threat” claim needs more than repetition</h3>
       <p>In the administration’s own messaging, “imminent” is the word doing the heavy lifting. The White House describes Epic Fury as necessary to stop a looming danger, and U.S. Central Command framed early strikes as focused on targets posing an “imminent threat.”</p>
 
       <p><strong>That’s a claim — not proof.</strong> Americans have heard “trust us” before. If the threat to the U.S. homeland was truly imminent, release as much supporting intelligence as possible (with sources protected) and explain the specific trigger: <em>what</em> was about to happen, <em>where</em>, and <em>against whom</em>.</p>
@@ -1948,7 +2004,7 @@ const articles = {
 
       <p>If the standard becomes “last best chance” without publicly testable evidence, then any future strike can be justified the same way — and “America First” becomes whatever Washington says it is that day.</p>
 
-      <p><strong> America First requires an end state — not “wars can be fought forever”</strong></p>
+      <h3>America First requires an end state — not “wars can be fought forever”</h3>
       <p>America First voters were promised fewer entanglements, not new ones. Yet the public messaging around Epic Fury has already flirted with open-endedness. Remember operation "Midnight Hammer" in June of 2025, when we struck Iranian nuclean facilities with seven B-2 bombers? U.S. officials reported "extremely severe damage and destruction" to the targeted facilities, significantly degrading Iran's nuclear capabilities. Less than one year later, we are back at it again in multiples of scale. The question isn’t whether the U.S. can project power. The question is whether we’re locking ourselves into a regional war spiral with no definable finish line.</p>
 
       <p>Define victory in plain English:</p>
@@ -1958,19 +2014,19 @@ const articles = {
         <li>What is the plan if strikes don’t change behavior?</li>
       </ul>
 
-      <p><strong> The costs of our actions are already landing: energy shocks and global disruption</strong></p>
+      <h3>The costs of our actions are already landing: energy shocks and global disruption</h3>
       <p>Even if one supports the operation in principle at face value, America First requires honesty about second-order effects. Energy markets and shipping lanes don’t care about talking points.</p>
 
       <p>Reuters reported that the conflict has driven major oil and gas disruptions, including impacts tied to Gulf production and LNG operations, while also highlighting the vulnerability of key chokepoints like the Strait of Hormuz. That’s the kind of disruption that shows up as higher prices, inflation pressure, and supply chain headaches back home.</p>
 
       <p>It’s not “isolationism” to acknowledge this. It’s realism. If the operation’s consequences include volatility in fuel costs and broader economic spillover, then the burden lands on American families first — the exact opposite of what “America First” implies.</p>
 
-      <p><strong> The Israel factor is policy reality — and it must not become autopilot</strong></p>
+      <h3>The Israel factor is policy reality — and it must not become autopilot</h3>
       <p>Israel has serious security interests related to Iran. That’s not controversial. What <em>is</em> controversial is whether U.S. policy becomes an automatic extension of another country’s regional strategy without clear U.S.-defined objectives and guardrails.</p>
 
       <p>Advocacy and influence campaigns exist in many forms, and multiple outlets have reported on efforts to shape U.S. opinion and political incentives. The point for Americans is simple: <strong>our leaders should be able to justify this war on U.S. interests alone</strong>, not on momentum, pressure, or media framing.</p>
 
-      <p><strong> America First means prove it — then limit it</strong><p>
+      <h3>America First means prove it — then limit it</h3>
       <p>If the administration wants the public’s buy-in, it should do three things immediately:</p>
       <ol style="margin:12px 0 18px 22px;color:var(--text-body);line-height:1.8;">
         <li><strong>Declassify the best evidence</strong> supporting the “imminent threat” claim.</li>
@@ -1984,7 +2040,6 @@ const articles = {
         <strong>Sources:</strong>
         White House statement on Operation Epic Fury; U.S. Central Command press release; CBS live updates including reported presidential remarks; Reuters reporting on energy and shipping disruptions; reporting on Israel-linked U.S. outreach/marketing efforts.
       </p>
-
     `
   },
 
@@ -2066,6 +2121,39 @@ const articles = {
   }
 };
 
+// Reading progress bar logic
+function updateReadingProgress() {
+  const progressWrap = document.getElementById('reading-progress');
+  const bar = document.getElementById('reading-progress-bar');
+  const article = document.getElementById('article-content');
+
+  const articlePageActive = document.getElementById('page-article-detail')?.classList.contains('active');
+  if (!progressWrap || !bar || !article || !articlePageActive) {
+    if (progressWrap) progressWrap.style.display = 'none';
+    return;
+  }
+
+  progressWrap.style.display = 'block';
+
+  const rect = article.getBoundingClientRect();
+  const viewportH = window.innerHeight || document.documentElement.clientHeight;
+
+  const articleTopInDoc = window.scrollY + rect.top;
+  const articleHeight = article.offsetHeight;
+
+  const scrollPos = window.scrollY;
+  const start = articleTopInDoc - 140;
+  const end = articleTopInDoc + articleHeight - viewportH * 0.35;
+
+  const raw = (scrollPos - start) / (end - start);
+  const pct = Math.max(0, Math.min(1, raw)) * 100;
+
+  bar.style.width = pct.toFixed(2) + '%';
+}
+
+window.addEventListener('scroll', updateReadingProgress, { passive: true });
+window.addEventListener('resize', updateReadingProgress);
+
 function openArticle(articleKey) {
   const article = articles[articleKey];
   if (!article) return;
@@ -2081,16 +2169,19 @@ function openArticle(articleKey) {
   contentEl.innerHTML = article.content;
 
   showPage('article-detail');
+  setTimeout(updateReadingProgress, 50);
 }
-
 
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
+
   document.querySelectorAll('.header-nav a').forEach(a => a.classList.remove('active'));
   const navEl = document.getElementById('nav-' + name);
   if (navEl) navEl.classList.add('active');
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  setTimeout(updateReadingProgress, 50);
 }
 </script>
 
