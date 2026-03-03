@@ -2518,7 +2518,70 @@ function updateReadingProgress() {
 
 window.addEventListener('scroll', updateReadingProgress, { passive: true });
 window.addEventListener('resize', updateReadingProgress);
+// ══════════════════════════════════════
+// WATCH SYSTEM (Featured Watch items)
+// ═════════════════════════════════════=
+const watches = {
+  watch1: {
+    title: "Example Video Title One",
+    meta: "March 3, 2026 · Featured · 6 min read",
+    youtubeId: "dQw4w9WgXcQ", // <-- replace with your real ID
+    commentary: `
+      <p><strong>One sentence that frames what the viewer is about to see</strong> and why it matters to faith, sovereignty, and the American citizen who pays the bill.</p>
 
+      <h3>What they’re claiming</h3>
+      <p>Summarize the core claim in plain English. Who is saying it, and what do they want the public to believe?</p>
+
+      <h3>What the clip actually shows</h3>
+      <p>Pull out 2–3 specific moments (timestamps if you want) and explain what’s implied, what’s missing, and what would need to be proven.</p>
+
+      <h3>The Standard’s take</h3>
+      <p>Short, direct commentary. Tie it back to America First, moral clarity, and incentives (money, lobbying, institutions, narratives).</p>
+    `
+  },
+
+  watch2: {
+    title: "Example Video Title Two",
+    meta: "March 2, 2026 · Briefing · 4 min read",
+    youtubeId: "VIDEO_ID_HERE",
+    commentary: `
+      <p>Drop in your commentary template here.</p>
+      <h3>Key point</h3>
+      <p>Explain the stakes.</p>
+    `
+  },
+
+  watch3: {
+    title: "Example Video Title Three",
+    meta: "Feb 28, 2026 · Clip · 5 min read",
+    youtubeId: "VIDEO_ID_HERE",
+    commentary: `
+      <p>Drop in your commentary template here.</p>
+    `
+  }
+};
+
+function openWatch(watchKey){
+  const w = watches[watchKey];
+  if (!w) return;
+
+  const titleEl = document.getElementById("watch-title");
+  const metaEl = document.getElementById("watch-meta");
+  const iframeEl = document.getElementById("watch-iframe");
+  const commEl = document.getElementById("watch-commentary");
+
+  if (!titleEl || !metaEl || !iframeEl || !commEl) return;
+
+  titleEl.innerText = w.title;
+  metaEl.innerText = w.meta;
+
+  // Use privacy-enhanced youtube-nocookie domain
+  iframeEl.src = `https://www.youtube-nocookie.com/embed/${w.youtubeId}?rel=0&modestbranding=1`;
+
+  commEl.innerHTML = w.commentary;
+
+  showPage('watch-detail');
+}
 function openArticle(articleKey) {
   const article = articles[articleKey];
   if (!article) return;
