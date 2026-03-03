@@ -2124,11 +2124,8 @@ footer svg circle {
 <script>
 
 // ══════════════════════════════════════
-// SIMPLE ARTICLE SYSTEM (DRAFTS)
-// Edit article bodies inside the `articles` object.
-// ═════════════════════════════════════=
-const articles = {
-   const watches = {
+// // WATCHES MUST BE OUTSIDE THE ARTICLES OBJECT
+const watches = {
   watch1: {
     title: "Example Video Title One",
     meta: "March 3, 2026 · Featured Watch · 6 min read",
@@ -2138,9 +2135,7 @@ const articles = {
       <p><strong>What you’re about to watch matters</strong> because it shows X in their own words.</p>
       <h3>What to Notice</h3>
       <ul>
-        <li>Point 1</li>
-        <li>Point 2</li>
-        <li>Point 3</li>
+        <li>Point 1</li><li>Point 2</li><li>Point 3</li>
       </ul>
       <p><strong>Our take:</strong> Replace this with your commentary.</p>
     `
@@ -2150,19 +2145,47 @@ const articles = {
     meta: "March 2, 2026 · Briefing · 4 min read",
     youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     youtubeEmbed: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    commentary: `
-      <p>Commentary for watch2 goes here.</p>
-    `
+    commentary: `<p>Commentary for watch2 goes here.</p>`
   },
   watch3: {
     title: "Example Video Title Three",
     meta: "Feb 28, 2026 · Clip · 5 min read",
     youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
     youtubeEmbed: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    commentary: `
-      <p>Commentary for watch3 goes here.</p>
-    `
+    commentary: `<p>Commentary for watch3 goes here.</p>`
   }
+};
+
+function openWatch(watchKey){
+  const w = watches[watchKey];
+  if(!w) return;
+
+  document.getElementById("watch-title").innerText = w.title;
+  document.getElementById("watch-meta").innerText = w.meta;
+
+  document.getElementById("watch-embed").innerHTML = `
+    <iframe
+      src="${w.youtubeEmbed}"
+      title="${w.title}"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      allowfullscreen>
+    </iframe>
+  `;
+
+  document.getElementById("watch-open-youtube").href = w.youtubeUrl;
+  document.getElementById("watch-commentary").innerHTML = w.commentary;
+
+  showPage('watch-detail');
+}
+
+// NOW your articles object starts normally
+const articles = {
+  globalistBlueprint: {
+    title: "Operation \"Epic Fury\" Challenges Trump's America First Framework",
+    meta: "March 3, 2026 · Deep Dive · 10 min read",
+    content: `...`
+  },
+  // rest...
 };
 
 function openWatch(watchKey){
