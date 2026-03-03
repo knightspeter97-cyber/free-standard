@@ -1178,14 +1178,39 @@ body { background: #faf6ee; color: #1a1008; }
 .nl-form input:focus { border-color: #8b1a1a; }
 .nl-form input::placeholder { color: #9a8a7a; }
 .nl-note { color: #9a8a7a; }
-footer { background: #2a0808; border-top-color: rgba(139,26,26,0.3); }
-.footer-brand p { color: rgba(255,240,220,0.5); }
-.footer-col h5 { color: rgba(200,149,42,0.9); }
-.footer-col a { color: rgba(255,240,220,0.4); }
-.footer-col a:hover { color: rgba(200,149,42,0.9); }
+footer { background: #000000; border-top-color: 1px solid rgba(255,255,255,0.1); }
+   /* Footer logo override */
+footer .logo-the {
+  color: rgba(255,255,255,0.7);
+}
+
+footer .logo-name {
+  color: #ffffff;
+}
+
+footer .logo-name span {
+  color: #ffffff;
+}
+
+footer .logo-tagline {
+  color: rgba(255,255,255,0.6);
+}
+
+footer svg path,
+footer svg line {
+  stroke: #ffffff !important;
+}
+
+footer svg circle {
+  fill: #ffffff !important;
+}
+.footer-brand p { color: rgba(255,255,255,0.75); }
+.footer-col h5 { color: rgba(ffffff); }
+.footer-col a { color: rgba(255,255,255,0.85); }
+.footer-col a:hover { color: rgba(c8952a); }
 .footer-bottom { border-top-color: rgba(139,26,26,0.3); }
-.footer-copy { color: rgba(255,240,220,0.2); }
-.footer-motto { color: rgba(200,149,42,0.7); }
+.footer-copy { color: rgba(255,255,255,0.6); }
+.footer-motto { color: rgba(ffffff); }
 .page-hero { background: linear-gradient(160deg, #ede5d4 0%, #f4ede0 100%); border-bottom-color: rgba(139,26,26,0.3); }
 .page-hero h1 { color: #1a1008; }
 .page-hero p { color: #3a2a1a; }
