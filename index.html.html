@@ -1339,7 +1339,7 @@ footer svg circle {
 
     <nav class="header-nav">
       <a onclick="showPage('home')" id="nav-home" class="active">Home</a>
-      <a onclick="showPage('podcast')" id="nav-podcast">Podcast</a>
+      <a onclick="showPage('watch')" id="nav-watch">Featured Watch</a>
       <a onclick="showPage('articles')" id="nav-articles">Articles</a>
       <a onclick="showPage('opeds')" id="nav-opeds">Op-Eds</a>
       <a onclick="showPage('mission')" id="nav-mission">Our Mission</a>
@@ -1376,7 +1376,7 @@ footer svg circle {
           The mainstream narrative is bought and paid for. The neoconservative machine has sold our country to lobbyists. We're done pretending otherwise. Think for yourself. It's your God-given right.
         </p>
         <div class="hero-ctas">
-          <a class="btn btn-red" onclick="showPage('podcast')">Listen to the Podcast</a>
+          <a class="btn btn-red" onclick="showPage('watch')">Watch Featured Clips</a>
           <a class="btn btn-gold" onclick="showPage('articles')">Read the Standard</a>
         </div>
       </div>
@@ -1596,48 +1596,41 @@ footer svg circle {
 <!-- ══════════════════════════════════════
      PODCAST PAGE
 ══════════════════════════════════════ -->
-<div id="page-podcast" class="page">
+<div id="page-watch" class="page">
   <div class="page-hero">
-    <div class="eyebrow" style="justify-content:center">The Free Standard</div>
-    <h1>The Podcast</h1>
-    <p>No sponsors with an agenda. No scripts. No permission. Just honest conversation rooted in faith and founding principles — every Tuesday.</p>
-  </div>
-  <section class="episodes-page">
-    <div class="section-wrap">
-      <div class="podcast-layout" style="margin-bottom:60px">
-        <div class="podcast-cover">
-          <div class="cover-ornament-top"><svg width="80" height="20" viewBox="0 0 80 20"><path d="M0 10 H30 M50 10 H80 M35 2 L40 10 L45 2" stroke="#c8952a" stroke-width="1" fill="none"/></svg></div>
-          <div class="cover-title">The Free<br/>Standard</div>
-          <div class="cover-cross">✝</div>
-          <div class="cover-sub">Podcast · Est. 2024</div>
-          <div class="cover-bottom-rule"></div>
-        </div>
-        <div class="podcast-info">
-          <div class="eyebrow">About the Show</div>
-          <h2>Conversations They Don't Want You Having</h2>
-          <p>The Free Standard Podcast is for Americans who are done being handed a narrative. Every episode, we dig into the questions that the mainstream media, the neoconservative establishment, and the lobbyist class would rather you not ask — through the lens of Christian faith, American history, and the founding principles that made this country worth fighting for.</p>
-          <p style="color:var(--text-muted);font-size:.95rem;margin-bottom:24px">New episodes every Tuesday. Available on all major platforms.</p>
-          <div class="podcast-platforms" style="margin-top:0">
-            <div class="platform-badge">🎙 Rumble</div>
-            <div class="platform-badge">🍎 Apple Podcasts</div>
-            <div class="platform-badge">🎵 Spotify</div>
-            <div class="platform-badge">📧 Substack</div>
-            <div class="platform-badge">🐦 X / Twitter</div>
-          </div>
-        </div>
+  <div class="eyebrow" style="justify-content:center">The Free Standard</div>
+  <h1>Featured Watch</h1>
+  <p>Watch the source. Then read the Standard’s commentary — rooted in faith, sovereignty, and reality.</p>
+</div>
+
+<section class="watch-page">
+  <div class="section-wrap">
+    <div class="eyebrow" style="margin-bottom:20px">This Week</div>
+
+    <div class="watch-grid">
+      <div class="watch-card" onclick="openWatch('watch1')">
+        <div class="watch-tag">Featured</div>
+        <h3>Example Video Title One</h3>
+        <p>Why it matters: one sentence preview that sets context and stakes.</p>
+        <div class="watch-meta">March 3, 2026 · 6 min read</div>
       </div>
-      <div class="eyebrow">All Episodes</div>
-      <h2 class="section-title" style="font-size:1.8rem;margin-bottom:28px">Every Episode of the Standard</h2>
-      <div class="episodes-full">
-        <div class="ep-full"><div class="ep-full-num">24</div><div class="ep-full-info"><div class="ep-full-tag">Politics · Deep Dive</div><div class="ep-full-title">Who Really Owns Your Congressman?</div><div class="ep-full-desc">We followed the PAC money, the bundler networks, and the revolving door between Capitol Hill and K Street. The results will make you angry — and they should. Your representative doesn't work for you until you make them.</div><div class="ep-full-meta">June 10, 2025 &nbsp;·&nbsp; 58 min &nbsp;·&nbsp; Season 2</div></div><div class="ep-full-play">▶</div></div>
-        <div class="ep-full"><div class="ep-full-num">23</div><div class="ep-full-info"><div class="ep-full-tag">Foreign Policy · Military</div><div class="ep-full-title">The War Machine Doesn't Need Your Son</div><div class="ep-full-desc">A deep look at who profits from perpetual war, why the neoconservative foreign policy establishment never faces consequences, and what Washington's original vision for America actually said about foreign entanglements.</div><div class="ep-full-meta">June 3, 2025 &nbsp;·&nbsp; 1h 12 min &nbsp;·&nbsp; Season 2</div></div><div class="ep-full-play">▶</div></div>
-        <div class="ep-full"><div class="ep-full-num">22</div><div class="ep-full-info"><div class="ep-full-tag">Faith · Culture</div><div class="ep-full-title">Faith Without Fear: Christianity & Politics</div><div class="ep-full-desc">The systematic retreat of the Church from the public square has not produced peace — it has produced a vacuum filled by ideology. We talk about what it actually looks like to pick up your cross in the political arena.</div><div class="ep-full-meta">May 27, 2025 &nbsp;·&nbsp; 47 min &nbsp;·&nbsp; Season 2</div></div><div class="ep-full-play">▶</div></div>
-        <div class="ep-full"><div class="ep-full-num">21</div><div class="ep-full-info"><div class="ep-full-tag">History · Founding Era</div><div class="ep-full-title">The Founding Fathers Were Not Neocons</div><div class="ep-full-desc">Jefferson, Adams, Washington — their views on foreign policy, standing armies, and the role of government bear almost no resemblance to what today's "conservative" establishment promotes. The evidence is in their own words.</div><div class="ep-full-meta">May 20, 2025 &nbsp;·&nbsp; 1h 4 min &nbsp;·&nbsp; Season 2</div></div><div class="ep-full-play">▶</div></div>
-        <div class="ep-full"><div class="ep-full-num">20</div><div class="ep-full-info"><div class="ep-full-tag">Economy · America First</div><div class="ep-full-title">The Small Town the Trade Deals Forgot</div><div class="ep-full-desc">We visit a manufacturing community gutted by globalist trade policy and ask — who made the decisions that did this, and where are they now? The answer is infuriating.</div><div class="ep-full-meta">May 13, 2025 &nbsp;·&nbsp; 55 min &nbsp;·&nbsp; Season 2</div></div><div class="ep-full-play">▶</div></div>
-        <div class="ep-full"><div class="ep-full-num">19</div><div class="ep-full-info"><div class="ep-full-tag">Media · Propaganda</div><div class="ep-full-title">Six Corporations. One Narrative.</div><div class="ep-full-desc">How six media conglomerates — and the defense contractors, pharma companies, and banks that advertise with them — shape what you believe about the world. A breakdown of the incentive structure that drives mainstream news.</div><div class="ep-full-meta">May 6, 2025 &nbsp;·&nbsp; 1h 8 min &nbsp;·&nbsp; Season 2</div></div><div class="ep-full-play">▶</div></div>
+
+      <div class="watch-card" onclick="openWatch('watch2')">
+        <div class="watch-tag">Briefing</div>
+        <h3>Example Video Title Two</h3>
+        <p>Why it matters: one sentence preview that sets context and stakes.</p>
+        <div class="watch-meta">March 2, 2026 · 4 min read</div>
+      </div>
+
+      <div class="watch-card" onclick="openWatch('watch3')">
+        <div class="watch-tag">Clip</div>
+        <h3>Example Video Title Three</h3>
+        <p>Why it matters: one sentence preview that sets context and stakes.</p>
+        <div class="watch-meta">Feb 28, 2026 · 5 min read</div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 </div>
 
 
