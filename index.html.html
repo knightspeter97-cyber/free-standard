@@ -2122,9 +2122,9 @@ footer svg circle {
 </footer>
 
 <script>
-
-// ══════════════════════════════════════
-// // WATCHES MUST BE OUTSIDE THE ARTICLES OBJECT
+/* =========================
+   DATA
+========================= */
 const watches = {
   watch1: {
     title: "Example Video Title One",
@@ -2156,9 +2156,113 @@ const watches = {
   }
 };
 
-function openWatch(watchKey){
+const articles = {
+  globalistBlueprint: {
+    title: 'Operation "Epic Fury" Challenges Trump\'s America First Framework',
+    meta: "March 3, 2026 · Deep Dive · 10 min read",
+    content: `
+      <p><strong>The White House says Operation “Epic Fury” is a precise campaign to eliminate an “imminent” threat.</strong> If that’s true, the evidence should be clear enough to show the American people.</p>
+      <p>“America First” is not measured by how quickly we can escalate into action...</p>
+      <h3>The “imminent threat” claim needs more than repetition</h3>
+      <p>...</p>
+    `
+  },
+
+  americaFirstIsrael: {
+    title: "America First — Except When It Comes to Israel?",
+    meta: "March 3, 2026 · Conservative Politics · 9 min read",
+    content: `
+      <p>For nearly a decade, the modern conservative movement has rallied around a simple, powerful idea: <strong>America First.</strong></p>
+      <p>...</p>
+    `
+  },
+
+  reclaimingPublicSquare: {
+    title: "Reclaiming the Public Square: Why Christians Can't Afford to Stay Silent",
+    meta: "June 10, 2025 · Faith & Culture · 7 min read",
+    content: `
+      <p>Many believers have been convinced that silence equals virtue. It doesn’t.</p>
+      <h3>Neutrality Is a Myth</h3>
+      <p>Every policy reflects a moral assumption. The only question is whose morality sets the rules.</p>
+    `
+  },
+
+  americaFirstTown: {
+    title: 'What "America First" Actually Means for Your Town — Not Just Your Bumper Sticker',
+    meta: "June 7, 2025 · Economy · 9 min read",
+    content: `
+      <p>Slogans are easy. Policy is harder.</p>
+      <h3>Trade Deals vs. Main Street</h3>
+      <p>If a policy benefits multinational corporations but hollows out local industry, it isn’t America First — it’s lobbyist first.</p>
+    `
+  },
+
+  fiveQuestionsCable: {
+    title: "Five Questions the Cable Networks Will Never Ask Their Defense Contractor Guests",
+    meta: "June 3, 2025 · Media · 5 min read",
+    content: `
+      <p>When the same sponsors fund the network and the “expert,” the interview is theater.</p>
+      <h3>The Five Questions</h3>
+      <ol>
+        <li>Who pays you — directly or indirectly?</li>
+        <li>What contracts does your employer hold right now?</li>
+        <li>What policy outcome benefits your balance sheet?</li>
+        <li>What’s the historical track record of your last 5 predictions?</li>
+        <li>What counter-arguments did you ignore to get here?</li>
+      </ol>
+    `
+  },
+
+  washingtonFarewell: {
+    title: "Washington's Farewell Address: The Warning We Were Given and Chose to Ignore",
+    meta: "May 29, 2025 · History · 8 min read",
+    content: `
+      <p>Washington didn’t write his farewell as a victory lap. He wrote it as a warning.</p>
+      <h3>Factions, Foreign Influence, and Debt</h3>
+      <p>He cautioned against the habits that destroy republics...</p>
+    `
+  },
+
+  rightToBearArms: {
+    title: "The Right to Bear Arms Is the Right That Protects All Others",
+    meta: "May 22, 2025 · 2nd Amendment · 10 min read",
+    content: `
+      <p>In a free society, rights aren’t granted by government — they’re recognized.</p>
+      <h3>Deterrence and Citizenship</h3>
+      <p>The point is not violence. The point is restraint...</p>
+    `
+  }
+};
+
+/* =========================
+   ROUTING
+========================= */
+function showPage(name) {
+  stopListen?.();
+
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+
+  const pageEl = document.getElementById("page-" + name);
+  if (!pageEl) {
+    console.warn("Missing page:", "page-" + name);
+    return;
+  }
+  pageEl.classList.add("active");
+
+  document.querySelectorAll(".header-nav a").forEach(a => a.classList.remove("active"));
+  const navEl = document.getElementById("nav-" + name);
+  if (navEl) navEl.classList.add("active");
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  setTimeout(updateReadingProgress, 50);
+}
+
+/* =========================
+   WATCH OPEN
+========================= */
+function openWatch(watchKey) {
   const w = watches[watchKey];
-  if(!w) return;
+  if (!w) return;
 
   document.getElementById("watch-title").innerText = w.title;
   document.getElementById("watch-meta").innerText = w.meta;
@@ -2175,342 +2279,52 @@ function openWatch(watchKey){
   document.getElementById("watch-open-youtube").href = w.youtubeUrl;
   document.getElementById("watch-commentary").innerHTML = w.commentary;
 
-  showPage('watch-detail');
+  showPage("watch-detail");
 }
 
-// NOW your articles object starts normally
-const articles = {
-  globalistBlueprint: {
-    title: "Operation \"Epic Fury\" Challenges Trump's America First Framework",
-    meta: "March 3, 2026 · Deep Dive · 10 min read",
-    content: `...`
-  },
-  // rest...
-};
-
-function openWatch(watchKey){
-  const w = watches[watchKey];
-  if(!w) return;
-
-  document.getElementById("watch-title").innerText = w.title;
-  document.getElementById("watch-meta").innerText = w.meta;
-
-  const embedEl = document.getElementById("watch-embed");
-  embedEl.innerHTML = `
-    <iframe
-      src="${w.youtubeEmbed}"
-      title="${w.title}"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-      allowfullscreen>
-    </iframe>
-  `;
-
-  const linkEl = document.getElementById("watch-open-youtube");
-  linkEl.href = w.youtubeUrl;
-
-  document.getElementById("watch-commentary").innerHTML = w.commentary;
-
-  showPage('watch-detail');
-}
-  globalistBlueprint: {
-    title: "Operation \"Epic Fury\" Challenges Trump's America First Framework",
-    meta: "March 3, 2026 · Deep Dive · 10 min read",
-    content: `
-      <p><strong>The White House says Operation “Epic Fury” is a precise campaign to eliminate an “imminent” threat.</strong> If that’s true, the evidence should be clear enough to show the American people. Instead, politicians and their media machines continue to blindly tell the public that the country was in danger, and action needed to be taken.</p>
-
-      <p>“America First” is not measured by how quickly we can escalate into action. It’s measured by whether American citizens are safer and better off when the dust settles — and whether the costs are justified <em>before</em> the bill comes due. This includes having a White House that transparently shows the cost, reasoning, and benefit.</p>
-
-      <h3>The “imminent threat” claim needs more than repetition</h3>
-      <p>In the administration’s own messaging, “imminent” is the word doing the heavy lifting. The White House describes Epic Fury as necessary to stop a looming danger, and U.S. Central Command framed early strikes as focused on targets posing an “imminent threat.”</p>
-
-      <p><strong>That’s a claim — not proof.</strong> Americans have heard “trust us” before. If the threat to the U.S. homeland was truly imminent, release as much supporting intelligence as possible (with sources protected) and explain the specific trigger: <em>what</em> was about to happen, <em>where</em>, and <em>against whom</em>.</p>
-
-      <blockquote style="margin:24px 0;padding:18px 22px;border-left:3px solid var(--crimson);background:rgba(139,26,26,0.06);font-style:italic;color:var(--text-body);">
-        “This was our last best chance to strike.” <span style="font-style:normal;color:var(--text-muted);">— President Trump, as reported in CBS live coverage</span>
-      </blockquote>
-
-      <p>If the standard becomes “last best chance” without publicly testable evidence, then any future strike can be justified the same way — and “America First” becomes whatever Washington says it is that day.</p>
-
-      <h3>America First requires an end state — not “wars can be fought forever”</h3>
-      <p>America First voters were promised fewer entanglements, not new ones. Yet the public messaging around Epic Fury has already flirted with open-endedness. Remember operation "Midnight Hammer" in June of 2025, when we struck Iranian nuclean facilities with seven B-2 bombers? U.S. officials reported "extremely severe damage and destruction" to the targeted facilities, significantly degrading Iran's nuclear capabilities. Less than one year later, we are back at it again in multiples of scale. The question isn’t whether the U.S. can project power. The question is whether we’re locking ourselves into a regional war spiral with no definable finish line.</p>
-
-      <p>Define victory in plain English:</p>
-      <ul style="margin:12px 0 18px 22px;color:var(--text-body);line-height:1.8;">
-        <li>What must Iran stop doing — specifically — for operations to end?</li>
-        <li>What conditions trigger escalation or de-escalation?</li>
-        <li>What is the plan if strikes don’t change behavior?</li>
-      </ul>
-
-      <h3>The costs of our actions are already landing: energy shocks and global disruption</h3>
-      <p>Even if one supports the operation in principle at face value, America First requires honesty about second-order effects. Energy markets and shipping lanes don’t care about talking points.</p>
-
-      <p>Reuters reported that the conflict has driven major oil and gas disruptions, including impacts tied to Gulf production and LNG operations, while also highlighting the vulnerability of key chokepoints like the Strait of Hormuz. That’s the kind of disruption that shows up as higher prices, inflation pressure, and supply chain headaches back home.</p>
-
-      <p>It’s not “isolationism” to acknowledge this. It’s realism. If the operation’s consequences include volatility in fuel costs and broader economic spillover, then the burden lands on American families first — the exact opposite of what “America First” implies.</p>
-
-      <h3>The Israel factor is policy reality — and it must not become autopilot</h3>
-      <p>Israel has serious security interests related to Iran. That’s not controversial. What <em>is</em> controversial is whether U.S. policy becomes an automatic extension of another country’s regional strategy without clear U.S.-defined objectives and guardrails.</p>
-
-      <p>Advocacy and influence campaigns exist in many forms, and multiple outlets have reported on efforts to shape U.S. opinion and political incentives. The point for Americans is simple: <strong>our leaders should be able to justify this war on U.S. interests alone</strong>, not on momentum, pressure, or media framing.</p>
-
-      <h3>America First means prove it — then limit it</h3>
-      <p>If the administration wants the public’s buy-in, it should do three things immediately:</p>
-      <ol style="margin:12px 0 18px 22px;color:var(--text-body);line-height:1.8;">
-        <li><strong>Declassify the best evidence</strong> supporting the “imminent threat” claim.</li>
-        <li><strong>State the end condition</strong> that ends operations and prevents mission creep.</li>
-        <li><strong>Publish a cost assessment</strong> that includes energy, shipping, cyber, and domestic security impacts.</li>
-      </ol>
-
-      <p>Otherwise, Epic Fury risks becoming another chapter in the same post-9/11 pattern: sweeping claims, thin transparency, and costs that compound for years — while families at home are told to accept it as “patriotism.”</p>
-
-      <p style="margin-top:18px;color:var(--text-muted);font-size:0.98rem;">
-        <strong>Sources:</strong>
-        White House statement on Operation Epic Fury; U.S. Central Command press release; CBS live updates including reported presidential remarks; Reuters reporting on energy and shipping disruptions; reporting on Israel-linked U.S. outreach/marketing efforts.
-      </p>
-    `
-  },
-
-   americaFirstIsrael: {
-    title: "America First — Except When It Comes to Israel?",
-    meta: "March 3, 2026 · Conservative Politics · 9 min read",
-    content: `
-      <p>For nearly a decade, the modern conservative movement has rallied around a simple, powerful idea: <strong>America First.</strong></p>
-
-      <p>Secure our border. Protect American jobs. End endless wars. Stop sending billions overseas while our own cities decay.</p>
-
-      <p>That doctrine reshaped the Republican Party in 2016. It rejected the neoconservative reflex for foreign entanglements and instead elevated national sovereignty and domestic renewal as the central pillars of governance.</p>
-
-      <p><strong>Yet there is one glaring exception.</strong></p>
-
-      <p>When it comes to Israel — and particularly to the government of Prime Minister Benjamin Netanyahu — the America First instinct seems to vanish.</p>
-
-      <p><strong>Why?</strong></p>
-
-      <p>If we are truly serious about national sovereignty, fiscal responsibility, and strategic restraint, then no alliance should be immune from scrutiny. Not Ukraine. Not NATO. And not Israel.</p>
-
-      <h3>The Tension Inside the Conservative Movement</h3>
-      <p>Grassroots conservatives have grown skeptical of global commitments. They question foreign aid packages, international institutions, and open-ended military guarantees. They ask hard questions about cost, strategy, and return on investment.</p>
-
-      <p>Yet when Congress approves billions in aid to Israel — on top of the longstanding $3.8 billion annual baseline — dissent within Republican leadership is minimal. The support is often framed as automatic, unquestionable, and morally obligatory.</p>
-
-      <p>That posture feels increasingly disconnected from the movement’s own stated principles.</p>
-
-      <p><em>America First was never supposed to mean “America First, unless.”</em></p>
-
-      <h3>The Fiscal Question</h3>
-      <p>The United States has provided Israel with more foreign aid than any other country since World War II. The current memorandum of understanding guarantees billions annually in military assistance, supplemented by emergency packages during periods of conflict.</p>
-
-      <p>Supporters argue this represents a small fraction of the federal budget. Technically, that’s true.</p>
-
-      <p><strong>But America First was never about percentages. It was about priorities.</strong></p>
-
-      <p>When:</p>
-      <ul style="margin:12px 0 18px 22px;color:var(--text-body);line-height:1.8;">
-        <li>The southern border remains under strain,</li>
-        <li>Veterans struggle with healthcare access,</li>
-        <li>Industrial towns in the Midwest remain hollowed out,</li>
-      </ul>
-
-      <p>voters are justified in asking whether foreign aid — even to allies — should be automatic rather than conditional.</p>
-
-      <p>Conservatives have rightly argued that European nations should shoulder more of their own defense burdens. Why should that principle stop at the Mediterranean?</p>
-
-      <p>Israel is a technologically advanced country with a GDP per capita comparable to Western Europe. It fields one of the most capable militaries in the region. If the goal of foreign aid is stabilization and development, Israel no longer fits the traditional definition of a dependent state.</p>
-
-      <p>An America First framework would at least ask: <strong>Should this relationship evolve?</strong></p>
-
-      <h3>Strategic Entanglement</h3>
-      <p>There is also the strategic dimension.</p>
-
-      <p>The Middle East has consumed enormous American blood and treasure over the last two decades. Many Trump voters supported him precisely because he promised to reduce these entanglements.</p>
-
-      <p>While the U.S. and Israel share intelligence cooperation and security interests, the two nations do not have identical geopolitical priorities. Israeli security decisions can escalate regional tensions in ways that affect American assets, American service members, and American diplomatic relationships.</p>
-
-      <p>A conservative foreign policy rooted in realism should assess alliances through a cold calculation:</p>
-
-      <blockquote style="margin:24px 0;padding:18px 22px;border-left:3px solid var(--crimson);background:rgba(139,26,26,0.06);font-style:italic;color:var(--text-body);">
-        Does this commitment enhance American security directly?<br/>
-        Or does it risk drawing the U.S. deeper into regional conflicts that are not existential to the homeland?
-      </blockquote>
-
-      <p>Those are not anti-Israel questions. They are pro-sovereignty questions.</p>
-
-      <h3>The Politics of Unquestioned Alignment</h3>
-      <p>Another uncomfortable reality: support for Israel has long been a bipartisan litmus test in Washington. Major lobbying organizations advocating for strong U.S.–Israel ties are among the most organized and well-funded in American politics.</p>
-
-      <p>That does not imply conspiracy or illegitimacy — lobbying is a constitutionally protected activity.</p>
-
-      <p>But if conservatives are willing to critique corporate lobbying, Big Tech influence, and defense industry capture, intellectual consistency demands the same scrutiny here.</p>
-
-      <p><strong>The concern is not ethnic or religious. It is structural.</strong></p>
-
-      <p>When any foreign policy position becomes politically untouchable — insulated from normal debate — representation suffers.</p>
-
-      <p><em>America First was supposed to dismantle political sacred cows, not preserve them.</em></p>
-
-      <h3>The Netanyahu Factor</h3>
-      <p>This conversation becomes sharper when framed around Benjamin Netanyahu specifically.</p>
-
-      <p>Netanyahu is a skilled and assertive political leader. He has cultivated deep ties within American political circles and has at times engaged directly with Congress during periods of tension with U.S. administrations.</p>
-
-      <p>That assertiveness may serve Israeli interests — and Israeli voters.</p>
-
-      <p>But American conservatives must ask a separate question:</p>
-
-      <p><strong>Does reflexive alignment with a specific foreign leader serve American voters?</strong></p>
-
-      <p>Supporting Israel as a strategic ally is one thing. Structuring U.S. policy in a way that appears closely aligned with the political fortunes of a foreign prime minister is another.</p>
-
-      <p>America First should mean that U.S. foreign policy decisions are determined solely by American strategic calculations — not by personal alliances, political optics, or historical inertia.</p>
-
-      <h3>Counterarguments Worth Taking Seriously</h3>
-      <p>A fair assessment must acknowledge the other side.</p>
-
-      <p>Israel provides:</p>
-      <ul style="margin:12px 0 18px 22px;color:var(--text-body);line-height:1.8;">
-        <li>Significant intelligence cooperation,</li>
-        <li>Advanced defense technology partnerships,</li>
-        <li>A stable democratic partner in a volatile region.</li>
-      </ul>
-
-      <p>These are not trivial advantages.</p>
-
-      <p>Moreover, abrupt disengagement could destabilize regional balances and embolden adversaries hostile to both Israel and the United States.</p>
-
-      <p>The question, however, is not whether Israel is an ally. It is whether the structure of the relationship reflects current realities — or Cold War-era assumptions.</p>
-
-      <p><strong>Alliances should mature. They should recalibrate as both partners evolve.</strong></p>
-
-      <h3>What Would America First Actually Require?</h3>
-      <p>A consistent America First doctrine would not demand hostility toward Israel.</p>
-
-      <p>It would demand normalcy.</p>
-
-      <ul style="margin:12px 0 18px 22px;color:var(--text-body);line-height:1.8;">
-        <li>Aid tied to clear reciprocal benchmarks.</li>
-        <li>Strategic cooperation grounded in mutual benefit.</li>
-        <li>No automatic escalatory commitments.</li>
-        <li>No policy exemptions from fiscal scrutiny.</li>
-      </ul>
-
-      <p>It would treat Israel as a respected sovereign partner — not as a permanent ward of American taxpayers, nor as a taboo subject beyond conservative debate.</p>
-
-      <p>Most importantly, it would restore a simple hierarchy:</p>
-
-      <p><strong>The American government exists to serve American citizens first.</strong></p>
-
-      <p>That principle does not preclude alliances. It simply insists they be evaluated through the same lens applied everywhere else.</p>
-
-      <h3>The Real Conservative Test</h3>
-      <p>For years, conservatives criticized the bipartisan foreign policy establishment for placing global strategy above domestic renewal.</p>
-
-      <p>If that critique was sincere, it must apply universally.</p>
-
-      <p><strong>America First cannot be selective.</strong></p>
-
-      <p>If Republicans truly believe in sovereignty, fiscal restraint, and strategic realism, then every foreign relationship — even the most historic ones — should withstand open examination.</p>
-
-      <p>Not out of hostility.<br/>Not out of resentment.<br/>But out of principle.</p>
-
-      <p><strong>Because in the end, America First either means something — or it doesn’t.</strong></p>
-    `
-  },
-   
-  reclaimingPublicSquare: {
-    title: "Reclaiming the Public Square: Why Christians Can't Afford to Stay Silent",
-    meta: "June 10, 2025 · Faith & Culture · 7 min read",
-    content: `
-      <p>Many believers have been convinced that silence equals virtue. It doesn’t.</p>
-
-      <h3>Neutrality Is a Myth</h3>
-      <p>Every policy reflects a moral assumption. The only question is whose morality sets the rules.</p>
-
-      <h3>Witness Requires Presence</h3>
-      <p>Christian courage isn’t loudness — it’s steadiness. It’s showing up, speaking clearly, and refusing to trade truth for comfort.</p>
-
-      <p><em>Draft note:</em> Add Scripture references, historical examples, and practical steps for readers.</p>
-    `
-  },
-
-  americaFirstTown: {
-    title: "What \"America First\" Actually Means for Your Town — Not Just Your Bumper Sticker",
-    meta: "June 7, 2025 · Economy · 9 min read",
-    content: `
-      <p>Slogans are easy. Policy is harder.</p>
-
-      <h3>Trade Deals vs. Main Street</h3>
-      <p>If a policy benefits multinational corporations but hollows out local industry, it isn’t America First — it’s lobbyist first.</p>
-
-      <h3>Local Resilience</h3>
-      <p>Real independence begins with resilient communities: durable jobs, local investment, and supply chains that don’t collapse the moment a port closes.</p>
-
-      <p><em>Draft note:</em> Add data points, charts, and a “What You Can Do Locally” section.</p>
-    `
-  },
-
-  fiveQuestionsCable: {
-    title: "Five Questions the Cable Networks Will Never Ask Their Defense Contractor Guests",
-    meta: "June 3, 2025 · Media · 5 min read",
-    content: `
-      <p>When the same sponsors fund the network and the “expert,” the interview is theater.</p>
-
-      <h3>The Five Questions</h3>
-      <ol>
-        <li>Who pays you — directly or indirectly?</li>
-        <li>What contracts does your employer hold right now?</li>
-        <li>What policy outcome benefits your balance sheet?</li>
-        <li>What’s the historical track record of your last 5 predictions?</li>
-        <li>What counter-arguments did you ignore to get here?</li>
-      </ol>
-
-      <p><em>Draft note:</em> Swap in your own sharper questions and add examples of real interviews.</p>
-    `
-  },
-
-  washingtonFarewell: {
-    title: "Washington's Farewell Address: The Warning We Were Given and Chose to Ignore",
-    meta: "May 29, 2025 · History · 8 min read",
-    content: `
-      <p>Washington didn’t write his farewell as a victory lap. He wrote it as a warning.</p>
-
-      <h3>Factions, Foreign Influence, and Debt</h3>
-      <p>He cautioned against the habits that destroy republics: factional obsession, entangling alliances, and short-term thinking disguised as patriotism.</p>
-
-      <p><em>Draft note:</em> Add excerpts (brief quotes), context, and a section tying his warnings to today’s incentives.</p>
-    `
-  },
-
-  rightToBearArms: {
-    title: "The Right to Bear Arms Is the Right That Protects All Others",
-    meta: "May 22, 2025 · 2nd Amendment · 10 min read",
-    content: `
-      <p>In a free society, rights aren’t granted by government — they’re recognized.</p>
-
-      <h3>Deterrence and Citizenship</h3>
-      <p>The point is not violence. The point is restraint: the government behaves differently when citizens can resist tyranny.</p>
-
-      <p><em>Draft note:</em> Add historical citations, court cases, and a section on responsibility and safe stewardship.</p>
-    `
-  }
-};
-
-// Reading progress bar logic
-function updateReadingProgress() {
-  const progressWrap = document.getElementById('reading-progress');
-  const bar = document.getElementById('reading-progress-bar');
-  const article = document.getElementById('article-content');
-
-  const articlePageActive = document.getElementById('page-article-detail')?.classList.contains('active');
-  if (!progressWrap || !bar || !article || !articlePageActive) {
-    if (progressWrap) progressWrap.style.display = 'none';
+/* =========================
+   ARTICLE OPEN
+========================= */
+function openArticle(articleKey) {
+  const article = articles[articleKey];
+  if (!article) return;
+
+  const titleEl = document.getElementById("article-title");
+  const metaEl = document.getElementById("article-meta");
+  const contentEl = document.getElementById("article-content");
+
+  if (!titleEl || !metaEl || !contentEl) {
+    console.warn("Missing article detail elements (#article-title/#article-meta/#article-content).");
     return;
   }
 
-  progressWrap.style.display = 'block';
+  titleEl.innerText = article.title;
+  metaEl.innerText = article.meta;
+  contentEl.innerHTML = article.content;
+
+  showPage("article-detail");
+  setTimeout(updateReadingProgress, 50);
+}
+
+/* =========================
+   READING PROGRESS
+========================= */
+function updateReadingProgress() {
+  const progressWrap = document.getElementById("reading-progress");
+  const bar = document.getElementById("reading-progress-bar");
+  const article = document.getElementById("article-content");
+  const articlePage = document.getElementById("page-article-detail");
+
+  const isActive = !!(articlePage && articlePage.classList.contains("active"));
+  if (!progressWrap || !bar || !article || !isActive) {
+    if (progressWrap) progressWrap.style.display = "none";
+    return;
+  }
+
+  progressWrap.style.display = "block";
 
   const rect = article.getBoundingClientRect();
   const viewportH = window.innerHeight || document.documentElement.clientHeight;
-
   const articleTopInDoc = window.scrollY + rect.top;
   const articleHeight = article.offsetHeight;
 
@@ -2520,50 +2334,21 @@ function updateReadingProgress() {
 
   const raw = (scrollPos - start) / (end - start);
   const pct = Math.max(0, Math.min(1, raw)) * 100;
-
-  bar.style.width = pct.toFixed(2) + '%';
+  bar.style.width = pct.toFixed(2) + "%";
 }
 
-window.addEventListener('scroll', updateReadingProgress, { passive: true });
-window.addEventListener('resize', updateReadingProgress);
+window.addEventListener("scroll", updateReadingProgress, { passive: true });
+window.addEventListener("resize", updateReadingProgress);
 
-function openArticle(articleKey) {
-  const article = articles[articleKey];
-  if (!article) return;
-
-  const titleEl = document.getElementById("article-title");
-  const metaEl = document.getElementById("article-meta");
-  const contentEl = document.getElementById("article-content");
-
-  if (!titleEl || !metaEl || !contentEl) return;
-
-  titleEl.innerText = article.title;
-  metaEl.innerText = article.meta;
-  contentEl.innerHTML = article.content;
-
-  showPage('article-detail');
-  setTimeout(updateReadingProgress, 50);
-}
-
-function showPage(name) {
-   stopListen();
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
-
-  document.querySelectorAll('.header-nav a').forEach(a => a.classList.remove('active'));
-  const navEl = document.getElementById('nav-' + name);
-  if (navEl) navEl.classList.add('active');
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  setTimeout(updateReadingProgress, 50);
-}
-   let ttsUtterance = null;
+/* =========================
+   TEXT TO SPEECH
+========================= */
+let ttsUtterance = null;
 let ttsIsPaused = false;
 
 function getReadableTextFromArticle() {
   const contentEl = document.getElementById("article-content");
   if (!contentEl) return "";
-  // Pull text only (no tags), clean spacing a bit
   return contentEl.innerText.replace(/\s+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
 }
 
@@ -2582,13 +2367,13 @@ function toggleListen() {
 
   const synth = window.speechSynthesis;
 
-  // If currently speaking, toggle pause/resume
   if (synth.speaking && !ttsIsPaused) {
     synth.pause();
     ttsIsPaused = true;
     updateListenUI("Paused", "Resume");
     return;
   }
+
   if (synth.speaking && ttsIsPaused) {
     synth.resume();
     ttsIsPaused = false;
@@ -2596,12 +2381,11 @@ function toggleListen() {
     return;
   }
 
-  // Start fresh
   const text = getReadableTextFromArticle();
   if (!text) return;
 
   ttsUtterance = new SpeechSynthesisUtterance(text);
-  ttsUtterance.rate = 1.0;    // tweak if you want
+  ttsUtterance.rate = 1.0;
   ttsUtterance.pitch = 1.0;
 
   ttsUtterance.onstart = () => {
@@ -2617,7 +2401,7 @@ function toggleListen() {
     updateListenUI("Error", "Listen");
   };
 
-  synth.cancel(); // cancel anything else
+  synth.cancel();
   synth.speak(ttsUtterance);
 }
 
@@ -2627,6 +2411,7 @@ function stopListen() {
   ttsIsPaused = false;
   updateListenUI("", "Listen");
 }
+
 </script>
 
 </div>
