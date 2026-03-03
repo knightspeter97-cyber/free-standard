@@ -6,23 +6,6 @@
 <title>The Free Standard — Independent Thought. Rooted in Faith.</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
-
-.strike {
-  position: relative;
-  display: inline-block;
-}
-
-.strike::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  height: 2px;
-  background: var(--crimson);
-}
-
-<span class="strike">blindness</span>
    
    .article-actions{
   display:flex;
@@ -1303,6 +1286,21 @@ footer svg circle {
 .hero-card p { color: #6a5a4a; }
 .hero-card-meta { color: #9a8a7a; }
 
+.strike {
+  position: relative;
+  display: inline-block;
+}
+
+.strike::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 55%;
+  height: 2px;
+  background: var(--crimson);
+}
+  
 </style>
 </head>
 <body>
@@ -1371,7 +1369,7 @@ footer svg circle {
       <div class="hero-left">
         <div class="hero-pre-title">Est. by Christians, For Christians</div>
         <h1 class="hero-headline">
-          They Give You <em>Blindness.</em><br/>
+          They Give You <span class="strike">Blindness</span>.</em><br/>
           We Give You <span class="red">Perspective.</span>
         </h1>
         <p class="hero-sub">
