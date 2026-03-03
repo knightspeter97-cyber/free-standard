@@ -1,2471 +1,1114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>The Free Standard — Independent Thought. Rooted in Faith.</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-<style>
-   
-   .article-actions{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap;
-  margin: 12px 0 22px;
-  padding-bottom: 18px;
-  border-bottom: 1px solid rgba(139,26,26,0.12);
-}
-   .article-actions .btn {
-  width: 140px;        /* fixed equal width */
-  height: 44px;        /* equal height */
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Oswald', sans-serif;
-  font-size: .75rem;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-}
-   #stop-btn {
-  border: 2px solid var(--crimson);
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Free Standard</title>
 
-/* ═══════════════════════════════════════════
-   WORDPRESS WRAPPER RESET (prevents theme block spacing)
-═══════════════════════════════════════════ */
-.wp-site-blocks, .site, .site-content, .content-area, .site-main,
-.entry-content, .wp-block-post-content, .wp-block-group, .wp-block-columns,
-.wp-block-html, .wp-block-template-part, .wp-block-cover, .wp-block-media-text {
-  margin: 0 !important;
-  padding: 0 !important;
-  max-width: none !important;
-}
-.entry-content > *, .wp-block-post-content > * {
-  margin-block-start: 0 !important;
-  margin-block-end: 0 !important;
-}
-/* If your theme centers content in a narrow column */
-.site-main, .entry-content, .wp-block-post-content {
-  width: 100% !important;
-}
-/* Keep our layout full-bleed inside WP */
-#tfs-root { width: 100%; margin: 0; padding: 0; }
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=Source+Serif+4:opsz,wght@8..60,300;8..60,400;8..60,600&display=swap" rel="stylesheet">
 
-/* ═══════════════════════════════════════════
-   DESIGN TOKENS
-═══════════════════════════════════════════ */
-:root {
-  --navy:       #f4ede0;
-  --navy-mid:   #ede5d4;
-  --navy-light: #e8dfc8;
-  --deep:       #faf6ee;
-  --crimson:    #8b1a1a;
-  --crimson-bright: #a52020;
-  --gold:       #8b1a1a;
-  --gold-light: #a52020;
-  --gold-pale:  #c43030;
-  --parchment:  #f4ede0;
-  --cream:      #faf6ee;
-  --warm-white: #1a1008;
-  --text-body:  #3a2a1a;
-  --text-muted: #6a5a4a;
-  --border:     #d4c8b0;
-  --border-gold: rgba(139,26,26,0.25);
-}
+  <style>
+    :root{
+      --deep:#0a0a0a;
+      --panel:#101010;
+      --panel-2:#141414;
+      --ink:#ffffff;
+      --text-body:#e8e8e8;
+      --text-muted:#b8b8b8;
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
+      --crimson:#8b1a1a;
+      --crimson-2:#a32121;
+      --gold:#c9a227;
 
-body {
-  font-family: 'EB Garamond', Georgia, serif;
-  background: var(--deep);
-  color: var(--warm-white);
-  line-height: 1.7;
-  overflow-x: hidden;
-}
+      --shadow:0 16px 40px rgba(0,0,0,.45);
+      --radius:18px;
+      --radius-sm:12px;
+      --max:1180px;
+    }
 
-/* ═══════════════════════════════════════════
-   PAGE ROUTING (SPA)
-═══════════════════════════════════════════ */
-.page { display: none; }
-.page.active { display: block; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      background: radial-gradient(1200px 600px at 15% -10%, rgba(139,26,26,.35), transparent 60%),
+                  radial-gradient(900px 500px at 85% 0%, rgba(201,162,39,.18), transparent 55%),
+                  var(--deep);
+      color:var(--ink);
+      font-family: "Source Serif 4", serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
-/* ═══════════════════════════════════════════
-   LOGO SVG
-═══════════════════════════════════════════ */
-.logo-mark {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  text-decoration: none;
-  cursor: pointer;
-}
-.logo-svg { flex-shrink: 0; }
-.logo-text-block { display: flex; flex-direction: column; }
-.logo-the {
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 400;
-  letter-spacing: 0.35em;
-  color: var(--gold);
-  text-transform: uppercase;
-  line-height: 1;
-  margin-bottom: 2px;
-}
-.logo-name {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.55rem;
-  font-weight: 900;
-  color: var(--warm-white);
-  line-height: 1;
-  letter-spacing: 0.01em;
-}
-.logo-name span { color: var(--gold); }
-.logo-tagline {
-  font-family: 'EB Garamond', serif;
-  font-style: italic;
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  letter-spacing: 0.05em;
-  margin-top: 3px;
-}
+    a{color:inherit;text-decoration:none}
+    button{font-family:inherit}
 
-/* ═══════════════════════════════════════════
-   ANNOUNCEMENT BAR
-═══════════════════════════════════════════ */
-.announce-bar {
-  background: var(--crimson);
-  padding: 7px 24px;
-  text-align: center;
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  color: #fff;
-  text-transform: uppercase;
-}
-.announce-bar span { color: var(--gold-pale); margin: 0 8px; }
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter: blur(10px);
+      background: rgba(10,10,10,.72);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .header-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:16px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      font-family:"Oswald", sans-serif;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+    .brand-badge{
+      width:34px; height:34px; border-radius:10px;
+      background: linear-gradient(135deg, var(--crimson), rgba(201,162,39,.9));
+      box-shadow: 0 10px 26px rgba(139,26,26,.35);
+    }
+    .brand-title{font-weight:600; font-size:1.05rem}
+    .brand-sub{font-weight:300; font-size:.72rem; color:var(--text-muted); letter-spacing:.12em}
 
-/* ═══════════════════════════════════════════
-   HEADER
-═══════════════════════════════════════════ */
-.site-header {
-  background: var(--navy);
-  border-bottom: 2px solid var(--border-gold);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 4px 32px rgba(0,0,0,0.5);
-}
-.header-inner {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 80px;
-  gap: 24px;
-}
-.header-nav {
-  display: flex;
-  align-items: flex-start;
-  gap: 4px;
-}
-.header-nav a {
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  color: #5a3a2a;
-  text-decoration: none;
-  padding: 10px 16px;
-  text-transform: uppercase;
-  transition: color 0.2s;
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: all 0.2s;
-}
-.header-nav a:hover, .header-nav a.active {
-  color: var(--crimson);
-  border-color: var(--border-gold);
-}
-.header-subscribe {
-  background: var(--crimson);
-  color: #fff !important;
-  border: 1px solid var(--crimson) !important;
-  padding: 8px 20px !important;
-  font-size: 0.76rem !important;
-  letter-spacing: 0.12em;
-  cursor: pointer;
-  transition: all 0.2s !important;
-}
-.header-subscribe:hover {
-  background: transparent !important;
-  color: var(--crimson) !important;
-}
+    .header-nav{
+      display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+      font-family:"Oswald", sans-serif;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      font-size:.78rem;
+    }
+    .header-nav a{
+      padding:10px 12px;
+      border-radius:12px;
+      color:var(--text-muted);
+      transition:.15s ease;
+      border:1px solid transparent;
+    }
+    .header-nav a:hover{
+      color:var(--ink);
+      border-color:rgba(255,255,255,.10);
+      background:rgba(255,255,255,.04);
+    }
+    .header-nav a.active{
+      color:var(--ink);
+      border-color:rgba(201,162,39,.35);
+      background:rgba(201,162,39,.08);
+    }
 
-/* ═══════════════════════════════════════════
-   READING PROGRESS BAR
-═══════════════════════════════════════════ */
-#reading-progress {
-  position: sticky;
-  top: 72px; /* header height */
-  z-index: 99;
-  height: 4px;
-  background: rgba(139,26,26,0.10);
-  width: 100%;
-  display: none; /* only show on article page */
-}
-#reading-progress-bar {
-  height: 100%;
-  width: 0%;
-  background: var(--crimson);
-  transition: width 0.08s linear;
-}
+    /* Layout helpers */
+    .page{display:none}
+    .page.active{display:block}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 20px}
 
-/* ═══════════════════════════════════════════
-   SHARED SECTION STYLES
-═══════════════════════════════════════════ */
-.section-wrap { max-width: 1280px; margin: 0 auto; padding: 0 40px; }
+    .page-hero{
+      padding:54px 0 28px;
+      text-align:center;
+    }
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-family:"Oswald", sans-serif;
+      text-transform:uppercase;
+      letter-spacing:.16em;
+      font-size:.72rem;
+      color:var(--text-muted);
+      justify-content:center;
+    }
+    .eyebrow-dot{
+      width:6px; height:6px; border-radius:50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 4px rgba(201,162,39,.18);
+    }
+    h1{
+      font-family:"Oswald", sans-serif;
+      font-weight:600;
+      letter-spacing:.02em;
+      margin:14px 0 10px;
+      font-size: clamp(2.0rem, 3.4vw, 3.0rem);
+    }
+    .lede{
+      color:var(--text-muted);
+      max-width:860px;
+      margin:0 auto;
+      font-size:1.05rem;
+      line-height:1.7;
+    }
 
-.eyebrow {
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.68rem;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  color: var(--gold);
-  text-transform: uppercase;
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-.eyebrow::before, .eyebrow::after {
-  content: '';
-  height: 1px;
-  width: 28px;
-  background: var(--gold);
-  opacity: 0.5;
-}
+    /* Cards */
+    .section{
+      padding:26px 0 64px;
+    }
+    .section-head{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      margin:8px 0 16px;
+      flex-wrap:wrap;
+    }
+    .section-title{
+      font-family:"Oswald", sans-serif;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-size:.88rem;
+      color:var(--text-muted);
+    }
+    .pill{
+      font-family:"Oswald", sans-serif;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-size:.7rem;
+      padding:8px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.08);
+      color:var(--text-muted);
+    }
 
-.section-title {
-  font-family: 'Playfair Display', serif;
-  font-weight: 900;
-  color: var(--warm-white);
-  line-height: 1.15;
-}
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap:16px;
+    }
+    .card{
+      grid-column: span 6;
+      background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.09);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      transition:.15s ease;
+      cursor:pointer;
+      position:relative;
+    }
+    .card:hover{
+      transform: translateY(-2px);
+      border-color: rgba(201,162,39,.22);
+    }
+    .card-inner{
+      padding:18px 18px 16px;
+    }
+    .card-kicker{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      font-family:"Oswald", sans-serif;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-size:.7rem;
+      color:var(--text-muted);
+      margin-bottom:10px;
+    }
+    .tag{
+      padding:6px 9px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.09);
+      background: rgba(139,26,26,.14);
+      color: rgba(255,255,255,.92);
+    }
+    .card h3{
+      margin:0 0 10px;
+      font-family:"Oswald", sans-serif;
+      font-weight:600;
+      font-size:1.25rem;
+      letter-spacing:.02em;
+      line-height:1.25;
+    }
+    .meta{
+      color:var(--text-muted);
+      font-size:.95rem;
+      line-height:1.6;
+      margin:0;
+    }
+    .card-footer{
+      padding:14px 18px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+      border-top:1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.18);
+    }
+    .card-action{
+      font-family:"Oswald", sans-serif;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-size:.72rem;
+      color:rgba(201,162,39,.95);
+    }
 
-.gold-rule {
-  width: 48px;
-  height: 2px;
-  background: var(--gold);
-  margin: 20px 0;
-}
+    /* Full-width featured card */
+    .card.featured{
+      grid-column: span 12;
+      display:flex;
+      align-items:stretch;
+      min-height: 220px;
+    }
+    .featured-left{
+      flex: 1.3;
+      padding:22px;
+    }
+    .featured-right{
+      flex: 1;
+      background:
+        radial-gradient(700px 250px at 30% 20%, rgba(139,26,26,.35), transparent 60%),
+        radial-gradient(600px 220px at 85% 55%, rgba(201,162,39,.22), transparent 60%),
+        rgba(255,255,255,.03);
+      border-left:1px solid rgba(255,255,255,.08);
+      display:flex;
+      align-items:flex-end;
+      justify-content:flex-end;
+      padding:22px;
+    }
+    .featured-quote{
+      font-family:"Oswald", sans-serif;
+      text-transform:uppercase;
+      letter-spacing:.12em;
+      color: rgba(255,255,255,.9);
+      font-size:.78rem;
+      text-align:right;
+      line-height:1.7;
+    }
 
-.btn {
-  display: inline-block;
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  text-decoration: none;
-  padding: 12px 28px;
-  border: 2px solid;
-  transition: all 0.22s;
-  cursor: pointer;
-}
-.btn-red { background: var(--crimson); color: #fff; border-color: var(--crimson); }
-.btn-red:hover { background: transparent; color: var(--crimson-bright); border-color: var(--crimson-bright); }
-.btn-gold { background: transparent; color: var(--crimson); border-color: var(--crimson); }
-.btn-gold:hover { background: var(--crimson); color: #fff; }
-.btn-outline-white { background: transparent; color: var(--crimson); border-color: rgba(139,26,26,0.4); }
-.btn-outline-white:hover { border-color: var(--crimson); color: var(--crimson); background: rgba(139,26,26,0.08); }
+    /* Buttons */
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid transparent;
+      cursor:pointer;
+      transition:.15s ease;
+      text-decoration:none;
+      font-family:"Oswald", sans-serif;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-size:.75rem;
+      user-select:none;
+    }
+    .btn-red{
+      background: linear-gradient(180deg, var(--crimson-2), var(--crimson));
+      border-color: rgba(255,255,255,.10);
+      color:var(--ink);
+    }
+    .btn-red:hover{filter:brightness(1.06)}
+    .btn-gold{
+      background: rgba(201,162,39,.15);
+      border-color: rgba(201,162,39,.35);
+      color:var(--ink);
+    }
+    .btn-gold:hover{background: rgba(201,162,39,.22)}
+    .btn-outline-white{
+      background: rgba(255,255,255,.04);
+      border-color: rgba(255,255,255,.14);
+      color:var(--ink);
+    }
+    .btn-outline-white:hover{background: rgba(255,255,255,.07)}
 
-/* ═══════════════════════════════════════════
-   ARTICLE DETAIL TYPOGRAPHY (Drop caps + Dividers)
-═══════════════════════════════════════════ */
-#article-content p { margin-bottom: 22px; }
-#article-content ul, #article-content ol { margin-bottom: 22px; }
-#article-content li { margin-bottom: 8px; }
+    /* Article / Watch detail */
+    .detail-wrap{
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    #article-meta,#watch-meta{
+      color:var(--text-muted);
+      font-size: .95rem;
+      margin: 0;
+    }
+    .article-actions{
+      display:flex; gap:10px; flex-wrap:wrap;
+      align-items:center;
+      margin: 18px 0 14px;
+    }
+    .detail-body{
+      background: rgba(0,0,0,.25);
+      border:1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      padding: 22px 22px 18px;
+      box-shadow: var(--shadow);
+    }
+    .detail-body h2,.detail-body h3{
+      font-family:"Oswald", sans-serif;
+      letter-spacing:.02em;
+      margin-top: 22px;
+    }
+    .detail-body p,.detail-body li{
+      color: var(--text-body);
+      font-size: 1.08rem;
+      line-height: 1.9;
+    }
+    .detail-body blockquote{
+      margin: 22px 0;
+      padding: 16px 18px;
+      border-left: 3px solid var(--crimson);
+      background: rgba(139,26,26,0.08);
+      color: var(--text-body);
+    }
 
-/* Drop cap on the first paragraph only */
-#article-content p:first-of-type::first-letter {
-  float: left;
-  font-family: 'Playfair Display', serif;
-  font-weight: 900;
-  font-size: 3.6rem;
-  line-height: 0.9;
-  margin: 0.12em 0.14em 0 0;
-  color: var(--crimson);
-}
-#article-content p:first-of-type { margin-top: 6px; }
+    /* Watch embed */
+    .video{
+      border-radius: var(--radius);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: var(--shadow);
+      background: rgba(255,255,255,.03);
+    }
+    .video iframe{
+      display:block;
+      width:100%;
+      height: 480px;
+      border:0;
+    }
 
-/* Subtle divider lines between major sections (h3) */
-#article-content h3 {
-  margin: 42px 0 14px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(139,26,26,0.18);
-  font-family: 'Playfair Display', serif;
-  font-size: 1.55rem;
-  font-weight: 800;
-  color: var(--warm-white);
-}
-#article-content h3:first-of-type {
-  border-top: none;
-  padding-top: 0;
-}
+    /* Reading progress bar */
+    #reading-progress{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      height:4px;
+      z-index:30;
+      background: rgba(255,255,255,.06);
+      display:none;
+    }
+    #reading-progress-bar{
+      height:100%;
+      width:0%;
+      background: linear-gradient(90deg, var(--crimson), var(--gold));
+      transition: width .08s linear;
+    }
 
-/* ═══════════════════════════════════════════
-   ██ HOME PAGE
-═══════════════════════════════════════════ */
+    /* Footer */
+    footer{
+      border-top:1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.35);
+      padding: 30px 0;
+      color: var(--text-muted);
+      font-size:.95rem;
+    }
+    .footer-wrap{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 20px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .footer-small{
+      font-family:"Oswald", sans-serif;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      font-size:.72rem;
+      color: rgba(201,162,39,.9);
+    }
 
-/* HERO */
-.hero {
-  position: relative;
-  min-height: auto;
-  display: flex;
-  align-items: flex-start;
-  overflow: hidden;
-  background: var(--deep);
-}
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 70% 50% at 60% 40%, rgba(139,26,26,0.10) 0%, transparent 65%),
-    linear-gradient(160deg, #f4ede0 0%, #ede5d4 50%, #f0e8d8 100%);
-}
-.hero-grid-overlay {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(139,26,26,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(139,26,26,0.04) 1px, transparent 1px);
-  background-size: 60px 60px;
-}
-.hero-content {
-  position: relative;
-  z-index: 2;
-  padding: 56px 40px 64px;
-  max-width: 1280px;
-  margin: 0 auto;
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 80px;
-  align-items: flex-start;
-}
-.hero-left {}
-.hero-pre-title {
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.28em;
-  color: var(--gold);
-  text-transform: uppercase;
-  margin-bottom: 22px;
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-}
-.hero-pre-title::before {
-  content: '';
-  display: inline-block;
-  width: 36px;
-  height: 1px;
-  background: var(--gold);
-}
-.hero-headline {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2.8rem, 5.5vw, 4.8rem);
-  font-weight: 900;
-  line-height: 1.08;
-  color: var(--warm-white);
-  margin-bottom: 28px;
-}
-.hero-headline em {
-  font-style: italic;
-  color: var(--crimson);
-}
-.hero-headline .red { color: var(--crimson-bright); }
-.hero-sub {
-  font-size: 1.2rem;
-  color: var(--text-body);
-  line-height: 1.7;
-  margin-bottom: 38px;
-  max-width: 520px;
-  font-style: italic;
-}
-.hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
-
-.hero-right {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.hero-featured-label {
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.65rem;
-  letter-spacing: 0.2em;
-  color: var(--crimson);
-  text-transform: uppercase;
-  padding: 8px 14px;
-  background: rgba(139,26,26,0.08);
-  border-left: 3px solid var(--crimson);
-  margin-bottom: 12px;
-}
-.hero-card {
-  background: rgba(255,252,246,0.85);
-  border: 1px solid var(--border);
-  padding: 24px;
-  cursor: pointer;
-  transition: all 0.22s;
-  border-left: 3px solid transparent;
-}
-.hero-card:hover {
-  background: rgba(255,252,246,1);
-  border-left-color: var(--crimson);
-  box-shadow: 0 2px 16px rgba(139,26,26,0.1);
-}
-.hero-card.top { border-left-color: var(--crimson); background: rgba(255,252,246,0.95); }
-.hero-card-tag {
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.62rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-.tag-red { color: var(--crimson-bright); }
-.tag-gold { color: var(--gold); }
-.tag-blue { color: #6ab0e8; }
-.tag-green { color: #7ab87a; }
-.hero-card h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--warm-white);
-  line-height: 1.3;
-  margin-bottom: 8px;
-}
-.hero-card p {
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-}
-.hero-card-meta {
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.62rem;
-  letter-spacing: 0.08em;
-  color: #4a6a8a;
-  margin-top: 10px;
-  text-transform: uppercase;
-}
-
-/* MANIFESTO BAND */
-.manifesto-band {
-  background: var(--gold);
-  padding: 20px 40px;
-  overflow: hidden;
-  position: relative;
-}
-.manifesto-scroll {
-  display: flex;
-  gap: 60px;
-  white-space: nowrap;
-  animation: marquee 30s linear infinite;
-}
-.manifesto-band p {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.05rem;
-  font-style: italic;
-  font-weight: 700;
-  color: var(--navy);
-  white-space: nowrap;
-}
-.manifesto-band .dot { color: var(--crimson); margin: 0 4px; }
-@keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
-/* TRINITY — 3 pillars bar */
-.trinity-bar {
-  background: var(--navy);
-  border-bottom: 1px solid var(--border);
-  padding: 48px 40px;
-}
-.trinity-inner {
-  max-width: 1280px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-}
-.trinity-item {
-  padding: 32px 36px;
-  border-left: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.trinity-item:first-child { border-left: none; }
-.trinity-icon {
-  font-size: 1.8rem;
-  margin-bottom: 4px;
-}
-.trinity-item h3 {
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gold-light);
-}
-.trinity-item p {
-  font-size: 0.95rem;
-  color: var(--text-body);
-  line-height: 1.6;
-}
-
-/* LATEST SECTION */
-.latest-section {
-  padding: 80px 0;
-  background: var(--deep);
-}
-.latest-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  margin-bottom: 40px;
-}
-.latest-grid {
-  display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr;
-  gap: 2px;
-  background: var(--border);
-}
-.article-tile {
-  background: var(--deep);
-  padding: 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  cursor: pointer;
-  transition: background 0.2s;
-  text-decoration: none;
-  color: inherit;
-}
-.article-tile:hover { background: var(--navy-light); }
-.article-tile.lead { padding: 40px; }
-.article-tile.lead h3 { font-size: 1.65rem; }
-.article-tile:not(.lead) h3 { font-size: 1.1rem; }
-.tile-tag {
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.62rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-.article-tile h3 {
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  color: var(--warm-white);
-  line-height: 1.25;
-}
-.article-tile p {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  line-height: 1.6;
-}
-.tile-meta {
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.62rem;
-  letter-spacing: 0.1em;
-  color: #3a5a7a;
-  text-transform: uppercase;
-  margin-top: auto;
-}
-
-/* PODCAST SECTION */
-.podcast-section {
-  padding: 80px 0;
-  background: var(--navy);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-.podcast-layout {
-  display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 60px;
-  align-items: start;
-}
-.podcast-cover {
-  position: relative;
-  aspect-ratio: 1;
-  background: linear-gradient(145deg, #0a1628 0%, #1a0808 100%);
-  border: 2px solid var(--border-gold);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 12px;
-  overflow: hidden;
-}
-.podcast-cover::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 30% 30%, rgba(200,149,42,0.12), transparent 60%),
-    radial-gradient(circle at 70% 70%, rgba(139,26,26,0.15), transparent 60%);
-}
-.cover-ornament-top {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  display: flex;
-  justify-content: center;
-  padding: 16px;
-}
-.cover-ornament-top svg { opacity: 0.5; }
-.cover-title {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.9rem;
-  font-weight: 900;
-  text-align: center;
-  color: var(--warm-white);
-  line-height: 1.15;
-  position: relative;
-  z-index: 1;
-}
-.cover-cross {
-  font-size: 1.4rem;
-  color: var(--gold);
-  position: relative;
-  z-index: 1;
-}
-.cover-sub {
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.62rem;
-  letter-spacing: 0.22em;
-  color: var(--gold);
-  text-transform: uppercase;
-  position: relative;
-  z-index: 1;
-}
-.cover-bottom-rule {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
-}
-
-.podcast-info {}
-.podcast-info h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; color: var(--warm-white); margin-bottom: 14px; line-height: 1.2; }
-.podcast-info > p { font-size: 1.1rem; color: var(--text-body); margin-bottom: 30px; line-height: 1.7; }
-.episodes { display: flex; flex-direction: column; gap: 2px; margin-bottom: 28px; }
-.episode {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-  padding: 14px 18px;
-  background: rgba(200,149,42,0.06);
-  border-left: 3px solid var(--border-gold);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.episode:hover { background: rgba(200,149,42,0.12); border-left-color: var(--gold); }
-.ep-play {
-  width: 34px; height: 34px;
-  background: var(--crimson);
-  border-radius: 50%;
-  display: flex; align-items: flex-start; justify-content: center;
-  font-size: 0.65rem;
-  color: #fff;
-  flex-shrink: 0;
-  transition: background 0.2s;
-}
-.episode:hover .ep-play { background: var(--crimson-bright); }
-.ep-info { flex: 1; }
-.ep-num { font-family: 'Oswald', sans-serif; font-size: 0.6rem; letter-spacing: 0.12em; color: var(--gold); text-transform: uppercase; }
-.ep-title { font-size: 0.95rem; color: var(--warm-white); line-height: 1.35; margin-top: 2px; }
-.ep-dur { font-family: 'Oswald', sans-serif; font-size: 0.62rem; color: var(--text-muted); letter-spacing: 0.06em; }
-.podcast-platforms {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 20px;
-}
-.platform-badge {
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.62rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  padding: 6px 14px;
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.platform-badge:hover { border-color: var(--gold); color: var(--gold); }
-
-/* OP-EDS */
-.opeds-section {
-  padding: 80px 0;
-  background: #090e18;
-  border-top: 1px solid var(--border);
-}
-.opeds-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px;
-}
-.oped-card {
-  padding: 32px;
-  border: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  transition: border-color 0.2s;
-  cursor: pointer;
-}
-.oped-card:hover { border-color: var(--border-gold); }
-.oped-card blockquote {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 1.25rem;
-  color: var(--gold-pale);
-  line-height: 1.5;
-  border-left: 3px solid var(--gold);
-  padding-left: 18px;
-}
-.oped-card h4 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--warm-white);
-  line-height: 1.35;
-}
-.oped-card p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.6; }
-.oped-author {
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  color: var(--gold);
-  text-transform: uppercase;
-  margin-top: auto;
-  padding-top: 14px;
-  border-top: 1px solid var(--border);
-}
-
-/* MISSION SECTION */
-.mission-section {
-  padding: 100px 0;
-  background: linear-gradient(170deg, var(--navy-mid) 0%, #100808 100%);
-  border-top: 3px solid var(--gold);
-  border-bottom: 3px solid var(--gold);
-  text-align: center;
-}
-.mission-cross-wrap {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 28px;
-}
-.mission-section h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2rem, 4.5vw, 3.2rem);
-  font-weight: 900;
-  color: var(--warm-white);
-  max-width: 780px;
-  margin: 0 auto 20px;
-  line-height: 1.2;
-}
-.mission-section > .section-wrap > p {
-  font-size: 1.15rem;
-  color: var(--text-body);
-  max-width: 640px;
-  margin: 0 auto 50px;
-  font-style: italic;
-  line-height: 1.7;
-}
-.mission-pillars {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  max-width: 1000px;
-  margin: 0 auto 60px;
-  text-align: left;
-}
-.mpillar {
-  padding: 32px 28px;
-  border: 1px solid var(--border-gold);
-  background: rgba(10,22,40,0.5);
-}
-.mpillar-icon { font-size: 2rem; margin-bottom: 14px; }
-.mpillar h4 {
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.9rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--gold-light);
-  margin-bottom: 10px;
-}
-.mpillar p { font-size: 0.92rem; color: var(--text-body); line-height: 1.65; }
-.scripture-block {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 32px;
-  border: 1px solid var(--border-gold);
-  background: rgba(0,0,0,0.3);
-}
-.scripture-text {
-  font-family: 'Playfair Display', serif;
-  font-style: italic;
-  font-size: 1.4rem;
-  color: var(--gold-pale);
-  line-height: 1.5;
-  margin-bottom: 10px;
-}
-.scripture-ref {
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  color: var(--gold);
-  text-transform: uppercase;
-}
-
-/* NEWSLETTER */
-.newsletter-section {
-  padding: 80px 0;
-  background: var(--navy);
-  text-align: center;
-}
-.newsletter-section h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.2rem;
-  font-weight: 900;
-  color: var(--warm-white);
-  margin-bottom: 10px;
-}
-.newsletter-section p {
-  font-style: italic;
-  color: var(--text-muted);
-  margin-bottom: 32px;
-  font-size: 1.1rem;
-}
-.nl-form {
-  display: flex;
-  max-width: 500px;
-  margin: 0 auto 20px;
-}
-.nl-form input {
-  flex: 1;
-  padding: 14px 20px;
-  background: rgba(0,0,0,0.4);
-  border: 1px solid var(--border);
-  border-right: none;
-  color: var(--warm-white);
-  font-family: 'EB Garamond', serif;
-  font-size: 1rem;
-  outline: none;
-  transition: border-color 0.2s;
-}
-.nl-form input:focus { border-color: var(--gold); }
-.nl-form input::placeholder { color: #3a5a7a; }
-.nl-form button {
-  padding: 14px 26px;
-  background: var(--crimson);
-  color: #fff;
-  border: 1px solid var(--crimson);
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.78rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.nl-form button:hover { background: var(--crimson-bright); }
-.nl-note {
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.62rem;
-  letter-spacing: 0.1em;
-  color: #2a4a6a;
-  text-transform: uppercase;
-}
-
-/* FOOTER */
-footer {
-  background: #04080f;
-  border-top: 2px solid var(--border);
-  padding: 56px 40px 28px;
-}
-.footer-inner { max-width: 1280px; margin: 0 auto; }
-.footer-top {
-  display: grid;
-  grid-template-columns: 1.8fr 1fr 1fr 1fr;
-  gap: 48px;
-  margin-bottom: 44px;
-  padding-bottom: 44px;
-  border-bottom: 1px solid var(--border);
-}
-.footer-brand p {
-  font-size: 0.9rem;
-  color: #3a5a7a;
-  line-height: 1.7;
-  margin-top: 14px;
-  max-width: 320px;
-}
-.footer-col h5 {
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 18px;
-}
-.footer-col ul { list-style: none; }
-.footer-col li { margin-bottom: 10px; }
-.footer-col a {
-  color: #3a5a7a;
-  text-decoration: none;
-  font-size: 0.92rem;
-  transition: color 0.2s;
-  cursor: pointer;
-}
-.footer-col a:hover { color: var(--gold-light); }
-.footer-bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.footer-copy {
-  font-size: 0.78rem;
-  color: #1e3050;
-  font-style: italic;
-}
-.footer-motto {
-  font-family: 'Oswald', sans-serif;
-  font-size: 0.68rem;
-  letter-spacing: 0.18em;
-  color: var(--crimson);
-  text-transform: uppercase;
-}
-
-/* ═══════════════════════════════════════════
-   ██ PODCAST PAGE
-═══════════════════════════════════════════ */
-.page-hero {
-  background: linear-gradient(160deg, var(--navy-mid) 0%, var(--deep) 100%);
-  padding: 80px 40px 60px;
-  border-bottom: 2px solid var(--border-gold);
-  text-align: center;
-}
-.page-hero h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2.4rem, 5vw, 4rem);
-  font-weight: 900;
-  color: var(--warm-white);
-  margin-bottom: 14px;
-}
-.page-hero p {
-  font-size: 1.15rem;
-  color: var(--text-body);
-  max-width: 600px;
-  margin: 0 auto;
-  font-style: italic;
-}
-.episodes-page { padding: 60px 0; background: var(--deep); }
-.episodes-full {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-.ep-full {
-  background: var(--navy);
-  border-left: 3px solid var(--border);
-  padding: 28px 32px;
-  display: flex;
-  gap: 24px;
-  align-items: flex-start;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.ep-full:hover { border-left-color: var(--gold); background: var(--navy-light); }
-.ep-full-num {
-  font-family: 'Oswald', sans-serif;
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--border-gold);
-  min-width: 60px;
-  line-height: 1;
-}
-.ep-full-info { flex: 1; }
-.ep-full-tag { font-family: 'Oswald', sans-serif; font-size: 0.6rem; letter-spacing: 0.18em; color: var(--gold); text-transform: uppercase; margin-bottom: 6px; }
-.ep-full-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--warm-white); margin-bottom: 8px; line-height: 1.3; }
-.ep-full-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
-.ep-full-meta { font-family: 'Oswald', sans-serif; font-size: 0.62rem; letter-spacing: 0.1em; color: #2a4a6a; text-transform: uppercase; margin-top: 10px; }
-.ep-full-play {
-  width: 48px; height: 48px;
-  background: var(--crimson);
-  border-radius: 50%;
-  display: flex; align-items: flex-start; justify-content: center;
-  font-size: 0.9rem;
-  color: #fff;
-  flex-shrink: 0;
-  margin-top: 4px;
-}
-
-/* ═══════════════════════════════════════════
-   ██ ARTICLES PAGE
-═══════════════════════════════════════════ */
-.articles-page { padding: 60px 0; background: var(--deep); }
-.articles-full-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 48px;
-}
-.articles-main { display: flex; flex-direction: column; gap: 2px; background: var(--border); }
-.article-row {
-  background: var(--deep);
-  padding: 32px;
-  cursor: pointer;
-  transition: background 0.2s;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.article-row:hover { background: var(--navy-light); }
-.article-row h3 { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--warm-white); line-height: 1.3; }
-.article-row p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
-.article-row-meta { font-family: 'Oswald', sans-serif; font-size: 0.62rem; letter-spacing: 0.1em; color: #2a4a6a; text-transform: uppercase; }
-.articles-sidebar { display: flex; flex-direction: column; gap: 24px; }
-.sidebar-widget { border: 1px solid var(--border); padding: 24px; }
-.sidebar-widget h4 { font-family: 'Oswald', sans-serif; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
-.sidebar-link { display: block; font-size: 0.92rem; color: var(--text-body); padding: 8px 0; border-bottom: 1px solid var(--border); text-decoration: none; cursor: pointer; transition: color 0.2s; }
-.sidebar-link:last-child { border-bottom: none; }
-.sidebar-link:hover { color: var(--gold-light); }
-.sidebar-link span { display: block; font-family: 'Oswald', sans-serif; font-size: 0.6rem; letter-spacing: 0.1em; color: var(--text-muted); text-transform: uppercase; margin-top: 2px; }
-
-/* ═══════════════════════════════════════════
-   ██ MISSION PAGE
-═══════════════════════════════════════════ */
-.mission-page { padding: 80px 0; background: var(--deep); }
-.mission-page-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-.mission-page-left {}
-.mission-page-left h2 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; color: var(--warm-white); line-height: 1.2; margin-bottom: 24px; }
-.mission-page-left p { font-size: 1.05rem; color: var(--text-body); line-height: 1.8; margin-bottom: 20px; }
-.mission-page-left p strong { color: var(--gold-light); font-weight: 600; }
-.founding-quote {
-  margin: 36px 0;
-  padding: 28px 32px;
-  border-left: 4px solid var(--gold);
-  background: rgba(200,149,42,0.06);
-}
-.founding-quote blockquote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.3rem; color: var(--gold-pale); line-height: 1.5; margin-bottom: 10px; }
-.founding-quote cite { font-family: 'Oswald', sans-serif; font-size: 0.68rem; letter-spacing: 0.14em; color: var(--gold); text-transform: uppercase; }
-.mission-page-right { display: flex; flex-direction: column; gap: 20px; }
-.value-card { padding: 28px; border: 1px solid var(--border); }
-.value-card-top { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px; }
-.value-icon { font-size: 1.4rem; }
-.value-card h4 { font-family: 'Oswald', sans-serif; font-size: 0.85rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-light); }
-.value-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.65; }
-
-/* ═══════════════════════════════════════════
-   ██ ABOUT PAGE
-═══════════════════════════════════════════ */
-.about-page { padding: 80px 0; background: var(--deep); }
-.about-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-.about-left h2 { font-family: 'Playfair Display', serif; font-size: 2.6rem; font-weight: 900; color: var(--warm-white); line-height: 1.2; margin-bottom: 24px; }
-.about-left p { font-size: 1.05rem; color: var(--text-body); line-height: 1.8; margin-bottom: 20px; }
-.about-right { display: flex; flex-direction: column; gap: 28px; }
-.about-card { padding: 28px; border: 1px solid var(--border); }
-.about-card h4 { font-family: 'Oswald', sans-serif; font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
-.about-card p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.65; }
-.write-cta { background: rgba(139,26,26,0.15); border: 1px solid var(--crimson); padding: 32px; text-align: center; margin-top: 40px; }
-.write-cta h4 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; color: var(--warm-white); margin-bottom: 10px; }
-.write-cta p { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 20px; }
-
-/* ═══════════════════════════════════════════
-   ██ LOGO PAGE (BRAND ASSETS)
-═══════════════════════════════════════════ */
-.brand-page { padding: 80px 0; background: var(--deep); }
-.brand-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; margin-top: 40px; }
-.brand-swatch {
-  padding: 48px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  gap: 20px;
-  border: 1px solid var(--border);
-  min-height: 280px;
-}
-.brand-swatch.dark { background: var(--navy); }
-.brand-swatch.light { background: var(--cream); }
-.brand-swatch.crimson-bg { background: var(--crimson); }
-.brand-swatch.parchment { background: var(--parchment); }
-.swatch-label { font-family: 'Oswald', sans-serif; font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); margin-top: 8px; }
-.brand-swatch.light .swatch-label { color: #7a6a5a; }
-.brand-swatch.parchment .swatch-label { color: #7a6a5a; }
-.brand-colors { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
-.color-chip { width: 80px; height: 80px; border-radius: 4px; display: flex; align-items: flex-end; padding: 6px; }
-.color-chip span { font-family: 'Oswald', sans-serif; font-size: 0.55rem; letter-spacing: 0.06em; color: rgba(255,255,255,0.7); }
-
-/* ═══════════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════════ */
-@media (max-width: 1024px) {
-  .hero-content { grid-template-columns: 1fr; gap: 48px; }
-  .podcast-layout { grid-template-columns: 1fr; }
-  .podcast-cover { max-width: 320px; }
-  .articles-full-grid { grid-template-columns: 1fr; }
-  .mission-page-layout, .about-layout { grid-template-columns: 1fr; gap: 40px; }
-  .brand-grid { grid-template-columns: 1fr; }
-}
-@media (max-width: 768px) {
-  .header-inner { padding: 0 20px; }
-  .header-nav { display: none; }
-  .section-wrap { padding: 0 20px; }
-  .trinity-inner { grid-template-columns: 1fr; }
-  .latest-grid { grid-template-columns: 1fr; }
-  .opeds-grid { grid-template-columns: 1fr; }
-  .mission-pillars { grid-template-columns: 1fr; }
-  .footer-top { grid-template-columns: 1fr 1fr; }
-  .hero-content { padding: 60px 20px 48px; }
-  .manifesto-band { padding: 16px 20px; }
-}
-
-/* ═══ LIGHT THEME OVERRIDES ═══ */
-body { background: #faf6ee; color: #1a1008; }
-.announce-bar { background: #8b1a1a; }
-.site-header { background: #f4ede0; border-bottom: 2px solid rgba(139,26,26,0.3); box-shadow: 0 2px 20px rgba(139,26,26,0.08); }
-.logo-the { color: #8b1a1a; }
-.logo-name { color: #1a1008; }
-.logo-name span { color: #8b1a1a; }
-.logo-tagline { color: #6a5a4a; }
-.hero { background: #f4ede0; }
-.hero-headline { color: #1a1008; }
-.hero-pre-title { color: #8b1a1a; }
-.hero-pre-title::before { background: #8b1a1a; }
-.section-title { color: #1a1008; }
-.manifesto-band { background: #8b1a1a; }
-.manifesto-band p { color: #fff; font-weight: 600; }
-.manifesto-band .dot { color: rgba(255,255,255,0.5); }
-.trinity-bar { background: #ede5d4; border-bottom: 1px solid rgba(139,26,26,0.15); }
-.trinity-item { border-left-color: rgba(139,26,26,0.15); }
-.trinity-item h3 { color: #8b1a1a; }
-.trinity-item p { color: #3a2a1a; }
-.latest-section { background: #faf6ee; }
-.latest-grid { background: rgba(139,26,26,0.1); }
-.article-tile { background: #faf6ee; }
-.article-tile:hover { background: #f0e6d4; }
-.article-tile h3 { color: #1a1008; }
-.article-tile p { color: #6a5a4a; }
-.tile-meta { color: #9a8a7a; }
-.podcast-section { background: #ede5d4; border-color: rgba(139,26,26,0.15); }
-.podcast-cover { background: linear-gradient(145deg, #2a0808 0%, #1a0404 100%); }
-.podcast-cover::before { background: radial-gradient(circle at 30% 30%, rgba(139,26,26,0.2), transparent 60%), radial-gradient(circle at 70% 70%, rgba(80,10,10,0.2), transparent 60%); }
-.cover-title { color: #fdf9f3; }
-.cover-cross { color: #c8952a; }
-.cover-sub { color: rgba(200,180,150,0.8); }
-.podcast-info h3 { color: #1a1008; }
-.podcast-info > p { color: #3a2a1a; }
-.episode { background: rgba(139,26,26,0.06); border-left-color: rgba(139,26,26,0.3); }
-.episode:hover { background: rgba(139,26,26,0.12); border-left-color: #8b1a1a; }
-.ep-num { color: #8b1a1a; }
-.ep-title { color: #1a1008; }
-.ep-dur { color: #6a5a4a; }
-.platform-badge { border-color: rgba(139,26,26,0.2); color: #6a5a4a; }
-.platform-badge:hover { border-color: #8b1a1a; color: #8b1a1a; }
-.opeds-section { background: #f4ede0; border-top-color: rgba(139,26,26,0.15); }
-.oped-card { border-color: rgba(139,26,26,0.15); background: #faf6ee; }
-.oped-card:hover { border-color: rgba(139,26,26,0.4); }
-.oped-card blockquote { color: #8b1a1a; border-left-color: #8b1a1a; }
-.oped-card h4 { color: #1a1008; }
-.oped-card p { color: #6a5a4a; }
-.oped-author { color: #8b1a1a; border-top-color: rgba(139,26,26,0.15); }
-.mission-section { background: linear-gradient(170deg, #ede5d4 0%, #f0e0d0 100%); border-color: #8b1a1a; }
-.mission-section h2 { color: #1a1008; }
-.mission-section > .section-wrap > p { color: #3a2a1a; }
-.mpillar { background: rgba(139,26,26,0.04); border-color: rgba(139,26,26,0.2); }
-.mpillar h4 { color: #8b1a1a; }
-.mpillar p { color: #3a2a1a; }
-.scripture-block { border-color: rgba(139,26,26,0.2); background: rgba(139,26,26,0.04); }
-.scripture-text { color: #8b1a1a; }
-.scripture-ref { color: #6a5a4a; }
-.newsletter-section { background: #ede5d4; }
-.newsletter-section h3 { color: #1a1008; }
-.newsletter-section p { color: #6a5a4a; }
-.nl-form input { background: rgba(255,252,246,0.9); border-color: rgba(139,26,26,0.2); color: #1a1008; }
-.nl-form input:focus { border-color: #8b1a1a; }
-.nl-form input::placeholder { color: #9a8a7a; }
-.nl-note { color: #9a8a7a; }
-footer { background: #000000; border-top-color: 1px solid rgba(255,255,255,0.1); }
-   /* Footer logo override */
-footer .logo-the {
-  color: rgba(255,255,255,0.7);
-}
-
-footer .logo-name {
-  color: #ffffff;
-}
-
-footer .logo-name span {
-  color: #ffffff;
-}
-
-footer .logo-tagline {
-  color: rgba(255,255,255,0.6);
-}
-
-footer svg path,
-footer svg line {
-  stroke: #ffffff !important;
-}
-
-footer svg circle {
-  fill: #ffffff !important;
-}
-.footer-brand p { color: rgba(255,255,255,0.75); }
-.footer-col h5 { color: rgba(ffffff); }
-.footer-col a { color: rgba(255,255,255,0.85); }
-.footer-col a:hover { color: rgba(c8952a); }
-.footer-bottom { border-top-color: rgba(139,26,26,0.3); }
-.footer-copy { color: rgba(255,255,255,0.6); }
-.footer-motto { color: rgba(ffffff); }
-.page-hero { background: linear-gradient(160deg, #ede5d4 0%, #f4ede0 100%); border-bottom-color: rgba(139,26,26,0.3); }
-.page-hero h1 { color: #1a1008; }
-.page-hero p { color: #3a2a1a; }
-.episodes-page { background: #faf6ee; }
-.ep-full { background: #f4ede0; border-left-color: rgba(139,26,26,0.2); }
-.ep-full:hover { border-left-color: #8b1a1a; background: #ede5d4; }
-.ep-full-num { color: rgba(139,26,26,0.25); }
-.ep-full-tag { color: #8b1a1a; }
-.ep-full-title { color: #1a1008; }
-.ep-full-desc { color: #6a5a4a; }
-.ep-full-meta { color: #9a8a7a; }
-.articles-page { background: #faf6ee; }
-.articles-main { background: rgba(139,26,26,0.1); }
-.article-row { background: #faf6ee; }
-.article-row:hover { background: #ede5d4; }
-.article-row h3 { color: #1a1008; }
-.article-row p { color: #6a5a4a; }
-.article-row-meta { color: #9a8a7a; }
-.articles-sidebar .sidebar-widget { border-color: rgba(139,26,26,0.15); background: #f4ede0; }
-.sidebar-widget h4 { color: #8b1a1a; border-bottom-color: rgba(139,26,26,0.15); }
-.sidebar-link { color: #3a2a1a; border-bottom-color: rgba(139,26,26,0.1); }
-.sidebar-link:hover { color: #8b1a1a; }
-.sidebar-link span { color: #9a8a7a; }
-.mission-page { background: #faf6ee; }
-.mission-page-left h2 { color: #1a1008; }
-.mission-page-left p { color: #3a2a1a; }
-.mission-page-left p strong { color: #8b1a1a; }
-.founding-quote { background: rgba(139,26,26,0.06); border-left-color: #8b1a1a; }
-.founding-quote blockquote { color: #8b1a1a; }
-.founding-quote cite { color: #6a5a4a; }
-.value-card { border-color: rgba(139,26,26,0.15); background: #f4ede0; }
-.value-card h4 { color: #8b1a1a; }
-.value-card p { color: #6a5a4a; }
-.about-page { background: #faf6ee; }
-.about-left h2 { color: #1a1008; }
-.about-left p { color: #3a2a1a; }
-.about-card { border-color: rgba(139,26,26,0.15); background: #f4ede0; }
-.about-card h4 { color: #8b1a1a; }
-.about-card p { color: #6a5a4a; }
-.write-cta { background: rgba(139,26,26,0.06); border-color: #8b1a1a; }
-.write-cta h4 { color: #1a1008; }
-.write-cta p { color: #6a5a4a; }
-.brand-page { background: #faf6ee; }
-.brand-swatch.dark { background: #1a0404; }
-.brand-swatch.light { background: #f4ede0; }
-.eyebrow { color: #8b1a1a; }
-.eyebrow::before, .eyebrow::after { background: #8b1a1a; }
-.hero-card h3 { color: #1a1008; }
-.hero-card p { color: #6a5a4a; }
-.hero-card-meta { color: #9a8a7a; }
-
-.strike {
-  position: relative;
-  display: inline-block;
-}
-
-.strike::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 55%;
-  height: 2px;
-  background: var(--crimson);
-}
-  
-</style>
+    /* Responsive */
+    @media (max-width: 920px){
+      .card{grid-column: span 12}
+      .card.featured{flex-direction:column}
+      .featured-right{border-left:0;border-top:1px solid rgba(255,255,255,.08)}
+      .video iframe{height: 380px}
+    }
+    @media (max-width: 560px){
+      .video iframe{height: 260px}
+      .header-wrap{padding:14px 14px}
+      .wrap{padding:0 14px}
+      .detail-wrap{padding:0 14px}
+      .detail-body{padding: 18px 16px}
+    }
+  </style>
 </head>
+
 <body>
-<div id="tfs-root">
+  <!-- Reading progress -->
+  <div id="reading-progress"><div id="reading-progress-bar"></div></div>
 
-<!-- ANNOUNCEMENT BAR -->
-<div class="announce-bar">
-  New Episode Every Tuesday <span>✦</span> "Question Everything. Fear Nothing. Stand on Truth." <span>✦</span> Subscribe Free — No Algorithms
-</div>
+  <header>
+    <div class="header-wrap">
+      <a class="brand" href="javascript:void(0)" onclick="showPage('home')">
+        <div class="brand-badge"></div>
+        <div>
+          <div class="brand-title">The Free Standard</div>
+          <div class="brand-sub">Truth. Sovereignty. Accountability.</div>
+        </div>
+      </a>
 
-<!-- HEADER -->
-<header class="site-header">
-  <div class="header-inner">
-
-    <!-- LOGO -->
-    <div class="logo-mark" onclick="showPage('home')">
-      <svg class="logo-svg" width="48" height="54" viewBox="0 0 48 54" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Shield outline -->
-        <path d="M24 2 L44 10 L44 30 C44 42 24 52 24 52 C24 52 4 42 4 30 L4 10 Z" fill="none" stroke="#c8952a" stroke-width="1.5"/>
-        <!-- Shield inner line -->
-        <path d="M24 6 L40 13 L40 30 C40 40 24 49 24 49 C24 49 8 40 8 30 L8 13 Z" fill="none" stroke="rgba(200,149,42,0.3)" stroke-width="0.75"/>
-        <!-- Cross -->
-        <line x1="24" y1="16" x2="24" y2="42" stroke="#c8952a" stroke-width="2"/>
-        <line x1="14" y1="26" x2="34" y2="26" stroke="#c8952a" stroke-width="2"/>
-        <!-- Stars at corners -->
-        <circle cx="24" cy="14" r="1.5" fill="#c8952a"/>
-        <!-- Top ornament -->
-        <path d="M20 8 L24 5 L28 8" fill="none" stroke="rgba(200,149,42,0.6)" stroke-width="1"/>
-      </svg>
-      <div class="logo-text-block">
-        <div class="logo-the">The</div>
-        <div class="logo-name">Free <span>Standard</span></div>
-        <div class="logo-tagline">Independent · Faith · Freedom</div>
-      </div>
+      <nav class="header-nav">
+        <a id="nav-home" class="active" href="javascript:void(0)" onclick="showPage('home')">Home</a>
+        <a id="nav-articles" href="javascript:void(0)" onclick="showPage('articles')">Articles</a>
+        <a id="nav-watch" href="javascript:void(0)" onclick="showPage('watch')">Watch</a>
+        <a id="nav-about" href="javascript:void(0)" onclick="showPage('about')">About</a>
+      </nav>
     </div>
+  </header>
 
-    <nav class="header-nav">
-      <a onclick="showPage('home')" id="nav-home" class="active">Home</a>
-      <a onclick="showPage('watch')" id="nav-watch">Featured Watch</a>
-      <a onclick="showPage('articles')" id="nav-articles">Articles</a>
-      <a onclick="showPage('opeds')" id="nav-opeds">Op-Eds</a>
-      <a onclick="showPage('mission')" id="nav-mission">Our Mission</a>
-      <a onclick="showPage('about')" id="nav-about">About</a>
-      <a onclick="showPage('brand')" id="nav-brand">Brand</a>
-      <a class="header-subscribe" onclick="document.getElementById('nl-input').focus(); showPage('home'); setTimeout(()=>document.querySelector('.newsletter-section').scrollIntoView({behavior:'smooth'}),100)">Subscribe</a>
-    </nav>
-
-  </div>
-</header>
-
-<!-- Reading progress bar (only shown on article page) -->
-<div id="reading-progress" aria-hidden="true">
-  <div id="reading-progress-bar"></div>
-</div>
-
-<!-- ══════════════════════════════════════
-     HOME PAGE
-══════════════════════════════════════ -->
-<div id="page-home" class="page active">
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-grid-overlay"></div>
-    <div class="hero-content">
-      <div class="hero-left">
-        <div class="hero-pre-title">Est. by Christians, For Christians</div>
-        <h1 class="hero-headline">
-          They Give You <span class="strike">Blindness</span>.</em><br/>
-          We Give You <span class="red">Perspective.</span>
-        </h1>
-        <p class="hero-sub">
-          The mainstream narrative is bought and paid for. The neoconservative machine has sold our country to lobbyists. We're done pretending otherwise. Think for yourself. It's your God-given right.
+  <!-- HOME -->
+  <main id="page-home" class="page active">
+    <section class="page-hero">
+      <div class="wrap">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> Independent commentary for the post-spin era</div>
+        <h1>America First — with receipts.</h1>
+        <p class="lede">
+          The Free Standard is a modern editorial site built for fast publishing and sharp analysis.
+          Read long-form articles, watch curated clips, and keep your audience focused on what matters.
         </p>
-        <div class="hero-ctas">
-          <a class="btn btn-red" onclick="showPage('watch')">Watch Featured Clips</a>
-          <a class="btn btn-gold" onclick="showPage('articles')">Read the Standard</a>
-        </div>
       </div>
-      <div class="hero-right">
-        <div class="hero-featured-label">✦ &nbsp; Featured This Week</div>
-        <div class="hero-card top" onclick="openArticle('globalistBlueprint')">
-          <div class="hero-card-tag tag-gold">Deep Dive · Featured</div>
-          <h3>Operation "Epic Fury" Challenges Trump's America First Framework</h3>
-          <p>The White House says it’s about an “imminent threat.” America First demands receipts — and a clear end state before Americans pay the price in blood, debt, and energy shocks.</p>
-          <div class="hero-card-meta">March 3, 2026 · 10 min read</div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-title">Featured</div>
+          <span class="pill">Click to open</span>
         </div>
-        <div class="hero-card" onclick="showPage('podcast')">
-          <div class="hero-card-tag tag-red">Podcast · New Episode</div>
-          <h3>Who Really Owns Your Congressman?</h3>
-          <p>We followed the money so you don't have to. The answer is not who they told you.</p>
-          <div class="hero-card-meta">EP. 24 &nbsp;·&nbsp; 58 min</div>
-        </div>
-        <div class="hero-card" onclick="showPage('opeds')">
-          <div class="hero-card-tag tag-green">Op-Ed · Faith</div>
-          <h3>Self-Reliance Isn't Selfishness. It's Christian Duty.</h3>
-          <div class="hero-card-meta">Staff Commentary &nbsp;·&nbsp; 6 min read</div>
-        </div>
-        <div class="hero-card" onclick="openArticle('washingtonFarewell')">
-          <div class="hero-card-tag tag-blue">History</div>
-          <h3>Washington's Farewell Address: The Warning We Were Given and Chose to Ignore</h3>
-          <div class="hero-card-meta">May 29, 2025 &nbsp;·&nbsp; 8 min read</div>
-        </div>
-      </div>
-    </div>
-  </section>
 
-  <!-- MANIFESTO MARQUEE -->
-  <div class="manifesto-band">
-    <div class="manifesto-scroll">
-      <p>"A free people must remain free in their minds first." <span class="dot">✦</span> Question Everything. Fear Nothing. Stand on Truth. <span class="dot">✦</span> Pick Up Your Cross and Think for Yourself. <span class="dot">✦</span> No Lobbyists. No Scripts. No Permission. <span class="dot">✦</span> Anchored in Faith. Rooted in Freedom. <span class="dot">✦</span></p>
-      <p>"A free people must remain free in their minds first." <span class="dot">✦</span> Question Everything. Fear Nothing. Stand on Truth. <span class="dot">✦</span> Pick Up Your Cross and Think for Yourself. <span class="dot">✦</span> No Lobbyists. No Scripts. No Permission. <span class="dot">✦</span> Anchored in Faith. Rooted in Freedom. <span class="dot">✦</span></p>
-    </div>
-  </div>
-
-  <!-- TRINITY -->
-  <div class="trinity-bar">
-    <div class="trinity-inner">
-      <div class="trinity-item">
-        <div class="trinity-icon">🦅</div>
-        <h3>Free Thought</h3>
-        <p>Question every narrative — left, right, and the "reasonable center" that always lands in the same place. Your mind belongs to God, not a cable news network funded by defense contractors.</p>
-      </div>
-      <div class="trinity-item">
-        <div class="trinity-icon">✝</div>
-        <h3>Christian Foundation</h3>
-        <p>Politics rooted in faith, not fear. The founding of this republic was inseparable from its Judeo-Christian moral order — and that order is worth defending with everything you've got.</p>
-      </div>
-      <div class="trinity-item">
-        <div class="trinity-icon">⚖️</div>
-        <h3>American Independence</h3>
-        <p>Individual liberty, local governance, self-reliance, strong families — and a government that fears its people. Not the other way around. That's what the founders built. Let's keep it.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- LATEST ARTICLES -->
-  <section class="latest-section">
-    <div class="section-wrap">
-      <div class="latest-header">
-        <div>
-          <div class="eyebrow">Latest from the Standard</div>
-          <h2 class="section-title" style="font-size:2rem">Articles & Reporting</h2>
-        </div>
-        <a class="btn btn-outline-white" onclick="showPage('articles')">View All →</a>
-      </div>
-      <div class="latest-grid">
-        <div class="article-tile lead" onclick="openArticle('globalistBlueprint')">
-          <div class="tile-tag tag-red">Deep Dive</div>
-          <h3>Operation "Epic Fury" Challenges Trump's America First Framework: The “Imminent Threat” Claim and the Costs Coming Home</h3>
-          <p>Operation Epic Fury is being sold as preemptive defense. But America First isn’t a slogan — it’s a standard. If Washington can’t prove imminence and define victory, the public deserves to say no.</p>
-          <div class="tile-meta">March 3, 2026 · 10 min read</div>
-        </div>
-        <div class="article-tile" onclick="openArticle('reclaimingPublicSquare')">
-          <div class="tile-tag tag-gold">Faith & Culture</div>
-          <h3>Reclaiming the Public Square: Why Christians Can't Afford to Stay Silent</h3>
-          <p>The retreat of the Church from public life didn't happen by accident — and it won't be reversed by accident either.</p>
-          <div class="tile-meta">June 10, 2025 &nbsp;·&nbsp; 7 min read</div>
-        </div>
-        <div class="article-tile" onclick="openArticle('americaFirstTown')">
-          <div class="tile-tag tag-blue">Economy</div>
-          <h3>What "America First" Actually Means for Your Town</h3>
-          <p>Strip away the slogans. Who wins and who loses when the lobbyists write the trade deals?</p>
-          <div class="tile-meta">June 7, 2025 &nbsp;·&nbsp; 9 min read</div>
-        </div>
-        <div class="article-tile" onclick="openArticle('fiveQuestionsCable')">
-          <div class="tile-tag tag-red">Media</div>
-          <h3>Five Questions Cable Networks Will Never Ask Their Defense Contractor Guests</h3>
-          <div class="tile-meta">June 3, 2025 &nbsp;·&nbsp; 5 min read</div>
-        </div>
-        <div class="article-tile" onclick="openArticle('washingtonFarewell')">
-          <div class="tile-tag tag-gold">History</div>
-          <h3>Washington's Farewell Address: The Warning We Chose to Ignore</h3>
-          <div class="tile-meta">May 29, 2025 &nbsp;·&nbsp; 8 min read</div>
-        </div>
-        <div class="article-tile" onclick="openArticle('rightToBearArms')">
-          <div class="tile-tag" style="color:#a78bfa">2nd Amendment</div>
-          <h3>The Right to Bear Arms Is the Right That Protects All Others</h3>
-          <div class="tile-meta">May 22, 2025 &nbsp;·&nbsp; 10 min read</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PODCAST PREVIEW -->
-  <section class="podcast-section">
-    <div class="section-wrap">
-      <div class="eyebrow">Now Broadcasting</div>
-      <div class="podcast-layout">
-        <div class="podcast-cover">
-          <div class="cover-ornament-top">
-            <svg width="80" height="20" viewBox="0 0 80 20"><path d="M0 10 H30 M50 10 H80 M35 2 L40 10 L45 2" stroke="#c8952a" stroke-width="1" fill="none"/></svg>
-          </div>
-          <div class="cover-title">The Free<br/>Standard</div>
-          <div class="cover-cross">✝</div>
-          <div class="cover-sub">Podcast · Est. 2024</div>
-          <div class="cover-bottom-rule"></div>
-        </div>
-        <div class="podcast-info">
-          <div class="eyebrow">The Free Standard Podcast</div>
-          <h2>No Sponsors. No Scripts. No Permission.</h2>
-          <p>Real conversations about the issues the bought media won't touch — rooted in faith, history, and the founding principles that made America worth fighting for. New episodes every Tuesday.</p>
-          <div class="episodes">
-            <div class="episode"><div class="ep-play">▶</div><div class="ep-info"><div class="ep-num">Episode 24</div><div class="ep-title">Who Really Owns Your Congressman?</div></div><div class="ep-dur">58 min</div></div>
-            <div class="episode"><div class="ep-play">▶</div><div class="ep-info"><div class="ep-num">Episode 23</div><div class="ep-title">The War Machine Doesn't Need Your Son</div></div><div class="ep-dur">1h 12m</div></div>
-            <div class="episode"><div class="ep-play">▶</div><div class="ep-info"><div class="ep-num">Episode 22</div><div class="ep-title">Faith Without Fear: Christianity & Politics</div></div><div class="ep-dur">47 min</div></div>
-            <div class="episode"><div class="ep-play">▶</div><div class="ep-info"><div class="ep-num">Episode 21</div><div class="ep-title">The Founding Fathers Were Not Neocons</div></div><div class="ep-dur">1h 4m</div></div>
-          </div>
-          <a class="btn btn-red" onclick="showPage('podcast')">All Episodes →</a>
-          <div class="podcast-platforms">
-            <div class="platform-badge">Rumble</div>
-            <div class="platform-badge">Apple Podcasts</div>
-            <div class="platform-badge">Spotify</div>
-            <div class="platform-badge">Substack</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- OP-EDS -->
-  <section class="opeds-section">
-    <div class="section-wrap">
-      <div class="eyebrow">Voices of the Standard</div>
-      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:36px">
-        <h2 class="section-title" style="font-size:2rem">Op-Eds & Commentary</h2>
-        <a class="btn btn-outline-white" onclick="showPage('opeds')">View All →</a>
-      </div>
-      <div class="opeds-grid">
-        <div class="oped-card" onclick="showPage('opeds')">
-          <blockquote>"The most dangerous man to any government is the man who is able to think things out for himself."</blockquote>
-          <h4>I Was a Republican Precinct Captain Until I Started Asking Questions</h4>
-          <p>When I stopped accepting the party line and started demanding answers, I found out who really runs the show — and it isn't the voters.</p>
-          <div class="oped-author">✦ &nbsp; Contributing Writer &nbsp;·&nbsp; June 12, 2025</div>
-        </div>
-        <div class="oped-card" onclick="showPage('opeds')">
-          <blockquote>"You cannot demolish the family through policy while calling it progress — and expect the republic to survive."</blockquote>
-          <h4>The Destruction of the American Family Was Not an Accident</h4>
-          <p>From zoning laws to welfare traps to tax structures that punish marriage — the assault on the family has been systematic.</p>
-          <div class="oped-author">✦ &nbsp; Staff Commentary &nbsp;·&nbsp; June 8, 2025</div>
-        </div>
-        <div class="oped-card" onclick="showPage('opeds')">
-          <blockquote>"Pick up your cross. Not because it's easy — because it's the only thing that actually works."</blockquote>
-          <h4>Self-Reliance Isn't Selfishness. It's Christian Duty.</h4>
-          <p>The Gospel calls us to build, to provide, to steward — and to lead our families with confidence rooted in faith, not government dependency.</p>
-          <div class="oped-author">✦ &nbsp; Staff Commentary &nbsp;·&nbsp; June 1, 2025</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- MISSION SECTION -->
-  <section class="mission-section">
-    <div class="section-wrap">
-      <div class="mission-cross-wrap">
-        <svg width="56" height="64" viewBox="0 0 56 64" fill="none">
-          <path d="M28 2 L52 12 L52 36 C52 50 28 62 28 62 C28 62 4 50 4 36 L4 12 Z" stroke="#c8952a" stroke-width="1.5" fill="none"/>
-          <line x1="28" y1="18" x2="28" y2="50" stroke="#c8952a" stroke-width="2.5"/>
-          <line x1="16" y1="30" x2="40" y2="30" stroke="#c8952a" stroke-width="2.5"/>
-        </svg>
-      </div>
-      <h2>We Don't Tell You What to Think.<br/>We Remind You That You Can.</h2>
-      <p>Built on the conviction that the American people are capable of governing themselves — spiritually, politically, and intellectually — when they are given truth instead of talking points.</p>
-      <div class="mission-pillars">
-        <div class="mpillar"><div class="mpillar-icon">🦅</div><h4>Free Thought</h4><p>Question every narrative — left, right, and the "reasonable center." Your mind belongs to God, not a cable network funded by defense contractors and pharmaceutical lobbyists.</p></div>
-        <div class="mpillar"><div class="mpillar-icon">✝</div><h4>Christian Foundation</h4><p>Faith-rooted, not fear-driven. The republic was built on a moral order — and the systematic demolition of that order is the source of most of what ails us.</p></div>
-        <div class="mpillar"><div class="mpillar-icon">⚖️</div><h4>American Values</h4><p>Individual liberty, local governance, self-reliance, strong families, and a healthy fear of centralized power. These aren't talking points — they're the blueprint.</p></div>
-      </div>
-      <div class="scripture-block">
-        <div class="scripture-text">"For God gave us a spirit not of fear but of power and love and self-control."</div>
-        <div class="scripture-ref">— 2 Timothy 1:7</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- NEWSLETTER -->
-  <section class="newsletter-section">
-    <div class="section-wrap">
-      <div class="eyebrow" style="justify-content:center">Join the Standard</div>
-      <h3>Delivered Direct. No Algorithm in the Way.</h3>
-      <p>No shadow-banning. No fact-checkers. Just the stories they don't want you to read, straight to your inbox every week.</p>
-      <div class="nl-form">
-        <input type="email" id="nl-input" placeholder="Your email address"/>
-        <button type="button">Subscribe Free</button>
-      </div>
-      <div class="nl-note">✦ &nbsp; Free Forever &nbsp; ✦ &nbsp; No Spam &nbsp; ✦ &nbsp; Unsubscribe Anytime</div>
-    </div>
-  </section>
-
-</div><!-- /home -->
-
-
-<!-- ══════════════════════════════════════
-     PODCAST PAGE
-══════════════════════════════════════ -->
-<div id="page-watch" class="page">
-  <div class="page-hero">
-  <div class="eyebrow" style="justify-content:center">The Free Standard</div>
-  <h1>Featured Watch</h1>
-  <p>Watch the source. Then read the Standard’s commentary — rooted in faith, sovereignty, and reality.</p>
-</div>
-
-<section class="watch-page">
-  <div class="section-wrap">
-    <div class="eyebrow" style="margin-bottom:20px">This Week</div>
-
-    <div class="watch-grid">
-      <div class="watch-card" onclick="openWatch('watch1')">
-        <div class="watch-tag">Featured</div>
-        <h3>Example Video Title One</h3>
-        <p>Why it matters: one sentence preview that sets context and stakes.</p>
-        <div class="watch-meta">March 3, 2026 · 6 min read</div>
-      </div>
-
-      <div class="watch-card" onclick="openWatch('watch2')">
-        <div class="watch-tag">Briefing</div>
-        <h3>Example Video Title Two</h3>
-        <p>Why it matters: one sentence preview that sets context and stakes.</p>
-        <div class="watch-meta">March 2, 2026 · 4 min read</div>
-      </div>
-
-      <div class="watch-card" onclick="openWatch('watch3')">
-        <div class="watch-tag">Clip</div>
-        <h3>Example Video Title Three</h3>
-        <p>Why it matters: one sentence preview that sets context and stakes.</p>
-        <div class="watch-meta">Feb 28, 2026 · 5 min read</div>
-      </div>
-    </div>
-  </div>
-</section>
-</div>
-
-
-<!-- ══════════════════════════════════════
-     ARTICLES PAGE
-══════════════════════════════════════ -->
-<div id="page-articles" class="page">
-  <div class="page-hero">
-    <div class="eyebrow" style="justify-content:center">The Free Standard</div>
-    <h1>Articles & Reporting</h1>
-    <p>Sourced. Documented. Unsponsored. The stories the bought press buries and the questions they refuse to ask.</p>
-  </div>
-  <section class="articles-page">
-    <div class="section-wrap">
-      <div class="articles-full-grid">
-        <div>
-          <div class="eyebrow" style="margin-bottom:20px">Latest Articles</div>
-          <div class="articles-main">
-            <div class="article-row" onclick="openArticle('globalistBlueprint')"><div class="tile-tag tag-red" style="font-family:'Oswald',sans-serif;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase">Deep Dive</div><h3>Operation "Epic Fury" Challenges Trump's America First Framework</h3><p>For decades, a bipartisan consensus has sent your sons and daughters to fight wars that had nothing to do with your security and everything to do with someone else's profit. It's time to name names and follow the money.</p><div class="article-row-meta">June 14, 2025 &nbsp;·&nbsp; 12 min read</div></div>
-            <div class="article-row" onclick="openArticle('americaFirstIsrael')"><div class="tile-tag tag-red" style="font-family:'Oswald',sans-serif;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase">Conservative Politics</div><h3>America First — Except When It Comes to Israel?</h3><p>America First reshaped the GOP around sovereignty, restraint, and domestic renewal — yet Israel often remains exempt from scrutiny. Should any alliance be beyond debate?</p><div class="article-row-meta">March 3, 2026 &nbsp;·&nbsp; 9 min read</div></div>
-             <div class="article-row" onclick="openArticle('reclaimingPublicSquare')"><div class="tile-tag tag-gold" style="font-family:'Oswald',sans-serif;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase">Faith & Culture</div><h3>Reclaiming the Public Square: Why Christians Can't Afford to Stay Silent</h3><p>The retreat of the Church from public life didn't happen by accident — and it won't be reversed by accident either.</p><div class="article-row-meta">June 10, 2025 &nbsp;·&nbsp; 7 min read</div></div>
-            <div class="article-row" onclick="openArticle('americaFirstTown')"><div class="tile-tag tag-blue" style="font-family:'Oswald',sans-serif;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase">Economy</div><h3>What "America First" Actually Means for Your Town — Not Just Your Bumper Sticker</h3><p>Strip away the slogans and look at the data. Who wins and who loses when the lobbyists write the trade deals?</p><div class="article-row-meta">June 7, 2025 &nbsp;·&nbsp; 9 min read</div></div>
-            <div class="article-row" onclick="openArticle('fiveQuestionsCable')"><div class="tile-tag tag-red" style="font-family:'Oswald',sans-serif;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase">Media</div><h3>Five Questions the Cable Networks Will Never Ask Their Defense Contractor Guests</h3><p>Every major news network has defense industry advertisers. Here are the questions that never get asked — and why.</p><div class="article-row-meta">June 3, 2025 &nbsp;·&nbsp; 5 min read</div></div>
-            <div class="article-row" onclick="openArticle('washingtonFarewell')"><div class="tile-tag tag-gold" style="font-family:'Oswald',sans-serif;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase">History</div><h3>Washington's Farewell Address: The Warning We Were Given and Chose to Ignore</h3><p>He told us exactly what would destroy the republic. We read it in school and then proceeded to do it anyway.</p><div class="article-row-meta">May 29, 2025 &nbsp;·&nbsp; 8 min read</div></div>
-            <div class="article-row" onclick="openArticle('rightToBearArms')"><div class="tile-tag" style="font-family:'Oswald',sans-serif;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:#a78bfa">2nd Amendment</div><h3>The Right to Bear Arms Is the Right That Protects All Others</h3><p>An armed citizenry is not a threat to a free society — it is the guarantee of one. The founders were explicit about why.</p><div class="article-row-meta">May 22, 2025 &nbsp;·&nbsp; 10 min read</div></div>
-          </div>
-        </div>
-        <div class="articles-sidebar">
-          <div class="sidebar-widget">
-            <h4>Browse by Topic</h4>
-            <a class="sidebar-link">Foreign Policy <span>12 articles</span></a>
-            <a class="sidebar-link">Faith & Culture <span>9 articles</span></a>
-            <a class="sidebar-link">Economy <span>14 articles</span></a>
-            <a class="sidebar-link">Media Criticism <span>8 articles</span></a>
-            <a class="sidebar-link">History & Founding <span>11 articles</span></a>
-            <a class="sidebar-link">2nd Amendment <span>6 articles</span></a>
-            <a class="sidebar-link">Border & Sovereignty <span>7 articles</span></a>
-            <a class="sidebar-link">Family & Values <span>10 articles</span></a>
-            <a class="sidebar-link">Conservative Politics <span>1 article</span></a> 
-          </div>
-          <div class="sidebar-widget">
-            <h4>Most Read This Month</h4>
-            <a class="sidebar-link">Who Profits from the Border Crisis? <span>Deep Dive · 18 min</span></a>
-            <a class="sidebar-link">The Fed Explained Without the Excuses <span>Economy · 14 min</span></a>
-            <a class="sidebar-link">What the 1st Amendment Actually Says <span>History · 8 min</span></a>
-            <a class="sidebar-link">The Parent's Guide to School Board Fights <span>Family · 11 min</span></a>
-          </div>
-          <div class="sidebar-widget" style="background:rgba(139,26,26,0.1);border-color:var(--crimson)">
-            <h4 style="color:var(--crimson-bright)">Write for the Standard</h4>
-            <p style="font-size:.88rem;color:var(--text-muted);line-height:1.6;margin-bottom:14px">Have a perspective they won't publish anywhere else? We want to hear from you.</p>
-            <a class="btn btn-red" style="font-size:.72rem;padding:8px 18px" onclick="showPage('about')">Submit a Piece →</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
-
-
-<!-- ══════════════════════════════════════
-     OP-EDS PAGE
-══════════════════════════════════════ -->
-<div id="page-opeds" class="page">
-  <div class="page-hero">
-    <div class="eyebrow" style="justify-content:center">Voices of the Standard</div>
-    <h1>Op-Eds & Commentary</h1>
-    <p>The perspectives you won't find in a paper owned by a hedge fund. Unfiltered. Unapologetic. Grounded in truth.</p>
-  </div>
-  <section style="padding:60px 0;background:var(--deep)">
-    <div class="section-wrap">
-      <div class="opeds-grid">
-        <div class="oped-card"><blockquote>"The most dangerous man to any government is the man who is able to think things out for himself."</blockquote><h4>I Was a Republican Precinct Captain Until I Started Asking Questions</h4><p>When I stopped accepting the party line and started demanding answers, I found out who really runs the show — and it isn't the voters. It's a small class of donors, lobbyists, and consultants who have made a career out of keeping you angry and distracted.</p><div class="oped-author">✦ &nbsp; Contributing Writer &nbsp;·&nbsp; June 12, 2025</div></div>
-        <div class="oped-card"><blockquote>"You cannot demolish the family through policy while calling it progress — and expect the republic to survive."</blockquote><h4>The Destruction of the American Family Was Not an Accident</h4><p>From zoning laws to welfare traps to tax structures that punish marriage — the assault on the family has been systematic and bipartisan. The first step to fixing it is admitting who designed it and why.</p><div class="oped-author">✦ &nbsp; Staff Commentary &nbsp;·&nbsp; June 8, 2025</div></div>
-        <div class="oped-card"><blockquote>"Pick up your cross. Not because it's easy — because it's the only thing that actually works."</blockquote><h4>Self-Reliance Isn't Selfishness. It's Christian Duty.</h4><p>The Gospel doesn't call us to dependency. It calls us to build, to provide, to steward — and to lead our families with confidence rooted in faith, not government. Self-reliance is not the opposite of community. It is its foundation.</p><div class="oped-author">✦ &nbsp; Staff Commentary &nbsp;·&nbsp; June 1, 2025</div></div>
-        <div class="oped-card"><blockquote>"Every great cause begins as a movement, becomes a business, and eventually degenerates into a racket."</blockquote><h4>The Conservative Movement Has Become What It Claimed to Fight</h4><p>The institutions that were built to defend American liberty have themselves become part of the permanent political class. It's time to name that honestly and build something new from the ground up.</p><div class="oped-author">✦ &nbsp; Contributing Writer &nbsp;·&nbsp; May 26, 2025</div></div>
-        <div class="oped-card"><blockquote>"A government that can give you everything can take everything away. That was always the deal."</blockquote><h4>On Dependency, Dignity, and the Gospel of Earned Things</h4><p>There is a difference between a safety net and a trap. Most of what we have built in the name of compassion functions as the latter — and the people it claims to help know it better than the people who designed it.</p><div class="oped-author">✦ &nbsp; Guest Contributor &nbsp;·&nbsp; May 18, 2025</div></div>
-        <div class="oped-card"><blockquote>"The border is not a political issue. It is a sovereignty issue. And sovereignty is not negotiable."</blockquote><h4>Calling the Border What It Is: A Failure of Political Will, Not Policy</h4><p>We have the laws. We have the courts. We have the manpower. What we do not have is a political class willing to enforce any of it — because the crisis is worth more to them than the solution.</p><div class="oped-author">✦ &nbsp; Staff Commentary &nbsp;·&nbsp; May 10, 2025</div></div>
-      </div>
-    </div>
-  </section>
-</div>
-
-
-<!-- ══════════════════════════════════════
-     MISSION PAGE
-══════════════════════════════════════ -->
-<div id="page-mission" class="page">
-  <div class="page-hero">
-    <div class="eyebrow" style="justify-content:center">Why We Exist</div>
-    <h1>Our Mission</h1>
-    <p>Not a manifesto. A statement of what we believe — and what we're willing to stand for.</p>
-  </div>
-  <section class="mission-page">
-    <div class="section-wrap">
-      <div class="mission-page-layout">
-        <div class="mission-page-left">
-          <h2>The Free Standard Exists Because the Truth Needs a Home</h2>
-          <p>For decades, the American conservative has been handed a script. <strong>Be angry at the right people. Fear the right enemies. Vote for the right candidates.</strong> And in exchange, the machine will protect your values.</p>
-          <p>It hasn't. Not because conservatism failed — but because the institutions that claimed to represent it were captured by the same donor class, the same defense contractors, and the same globalist consensus they claimed to oppose.</p>
-          <p>The Free Standard was built for the American who is <strong>done being managed.</strong> For the father who wants to raise his children with Christian values and not apologize for it. For the veteran who is tired of watching the country he fought for be dismantled by people who never served. For the citizen who has read enough history to know that what we are being told does not match what has actually happened.</p>
-          <div class="founding-quote">
-            <blockquote>"It is the first responsibility of every citizen to question authority."</blockquote>
-            <cite>— Benjamin Franklin</cite>
-          </div>
-          <p>We are not here to tell you what to think. We are here to give you the information, the questions, and the historical context to think for yourself — anchored in Christian faith, American founding principles, and the kind of honest inquiry that the bought press has abandoned.</p>
-          <p><strong>We believe in free thought. We believe in faith. We believe in freedom.</strong> And we believe those three things are inseparable.</p>
-        </div>
-        <div class="mission-page-right">
-          <div class="value-card"><div class="value-card-top"><div class="value-icon">🦅</div><h4>Free & Independent Thought</h4></div><p>No narrative handed down from above. No approved conclusions. Every article, episode, and op-ed is designed to give you information and ask you questions — not to tell you what to believe.</p></div>
-          <div class="value-card"><div class="value-card-top"><div class="value-icon">✝</div><h4>Rooted in Christian Faith</h4></div><p>We believe the moral foundation of this republic — and of the free individual — is inseparable from the Judeo-Christian tradition. Faith is not a liability in the public square. It is the anchor that keeps free thought from becoming mere ideology.</p></div>
-          <div class="value-card"><div class="value-card-top"><div class="value-icon">🏛️</div><h4>Founded on American Principles</h4></div><p>The Constitution. The Declaration. The Federalist Papers. Washington's Farewell Address. These are not relics — they are operating instructions for a self-governing people. We take them seriously.</p></div>
-          <div class="value-card"><div class="value-card-top"><div class="value-icon">🏡</div><h4>Strong Families, Strong Nation</h4></div><p>The family is the first government. The first church. The first economy. Everything else flows from it — and everything that attacks it attacks the foundation of a free society.</p></div>
-          <div class="value-card"><div class="value-card-top"><div class="value-icon">⚔️</div><h4>No Sacred Cows</h4></div><p>We will criticize the Republican establishment with the same rigor we apply to the Left. Neoconservatives, globalists, and uniparty grifters get no special pass for calling themselves conservatives.</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="mission-section" style="padding:80px 0">
-    <div class="section-wrap">
-      <div class="scripture-block" style="max-width:700px">
-        <div class="scripture-text">"For God gave us a spirit not of fear but of power and love and self-control."</div>
-        <div class="scripture-ref">— 2 Timothy 1:7 &nbsp;·&nbsp; The Standard's Guiding Verse</div>
-      </div>
-    </div>
-  </section>
-</div>
-
-
-<!-- ══════════════════════════════════════
-     ABOUT PAGE
-══════════════════════════════════════ -->
-<div id="page-about" class="page">
-  <div class="page-hero">
-    <div class="eyebrow" style="justify-content:center">Who We Are</div>
-    <h1>About The Free Standard</h1>
-    <p>Built by Americans who got tired of waiting for someone else to say what needed to be said.</p>
-  </div>
-  <section class="about-page">
-    <div class="section-wrap">
-      <div class="about-layout">
-        <div class="about-left">
-          <h2>This Started With a Simple Question: Why Aren't They Asking This?</h2>
-          <p>The Free Standard began when a group of ordinary Americans — veterans, fathers, business owners, pastors, and citizens — kept noticing the same thing: the questions that mattered most were never getting asked by the people who were supposed to be asking them.</p>
-          <p>Not by the mainstream press. Not by the establishment conservative media. Not by the politicians who claimed to represent them. Every channel was pointed in the same direction, funded by the same interests, reading from the same script.</p>
-          <p>So we built something different.</p>
-          <p>The Free Standard is an independent media platform — no corporate ownership, no advertiser conflicts of interest, no donor class to answer to. We produce a weekly podcast, original reporting, and guest commentary, all anchored in the conviction that the American people deserve honest journalism and are capable of handling the truth.</p>
-          <p>We are not a political party. We are not a PAC. We are not aligned with any political figure or faction. We are a publication — in the oldest and most American sense of that word. We print what we believe. We invite you to read, listen, question, and decide for yourself.</p>
-          <div class="write-cta">
-            <h4>Write for the Standard</h4>
-            <p>Have a perspective the mainstream won't publish? We want to hear from voices that have been shut out, silenced, or simply ignored by the establishment press.</p>
-            <a class="btn btn-red">Submit Your Piece →</a>
-          </div>
-        </div>
-        <div class="about-right">
-          <div class="about-card"><h4>Editorial Independence</h4><p>The Free Standard accepts no advertising from defense contractors, pharmaceutical companies, financial institutions, or political organizations. Our funding comes entirely from readers and listeners who support independent journalism. That's it.</p></div>
-          <div class="about-card"><h4>Our Standard for Truth</h4><p>Every claim we publish is sourced. We cite primary documents when they exist. We distinguish between opinion and reporting. We correct errors publicly and promptly. We ask you to hold us to this standard — and to hold everyone else to it too.</p></div>
-          <div class="about-card"><h4>Our Faith</h4><p>We are a publication with a Christian worldview. This does not mean we are a church bulletin or a denominational organ. It means we believe truth is not relative, that moral clarity is possible, and that free thought anchored in faith produces better citizens than ideology divorced from it.</p></div>
-          <div class="about-card"><h4>What We Are Not</h4><p>We are not spokesmen for the Republican Party. We are not aligned with any political figure. We will criticize any politician, institution, or media outlet — regardless of party — when they fail the American people. That includes the neoconservative establishment that has hijacked the conservative movement.</p></div>
-          <div class="sidebar-widget" style="margin-top:8px">
-            <h4>Get in Touch</h4>
-            <a class="sidebar-link">Editorial Submissions <span>Send us your op-ed or pitch</span></a>
-            <a class="sidebar-link">Podcast Guest Inquiries <span>Appear on the show</span></a>
-            <a class="sidebar-link">Press & Media <span>For media requests</span></a>
-            <a class="sidebar-link">General Contact <span>Questions & feedback</span></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
-
-
-<!-- ══════════════════════════════════════
-     BRAND / LOGO PAGE
-══════════════════════════════════════ -->
-<div id="page-brand" class="page">
-  <div class="page-hero">
-    <div class="eyebrow" style="justify-content:center">Brand Assets</div>
-    <h1>Logo & Brand Identity</h1>
-    <p>The visual language of The Free Standard — built on strength, heritage, and clarity.</p>
-  </div>
-  <section class="brand-page">
-    <div class="section-wrap">
-
-      <div class="eyebrow">The Logo</div>
-      <h2 class="section-title" style="font-size:1.8rem;margin-bottom:8px">Logo System</h2>
-      <p style="color:var(--text-muted);font-size:.95rem;margin-bottom:36px">The shield mark combines a Christian cross with a founding-era heraldic form — protection, faith, and strength. Paired with Playfair Display for editorial authority and Oswald for clarity at small sizes.</p>
-
-      <div class="brand-grid">
-
-        <!-- Primary Dark -->
-        <div class="brand-swatch dark">
-          <div class="logo-mark" style="pointer-events:none">
-            <svg width="64" height="72" viewBox="0 0 56 64" fill="none">
-              <path d="M28 2 L52 12 L52 36 C52 50 28 62 28 62 C28 62 4 50 4 36 L4 12 Z" fill="none" stroke="#c8952a" stroke-width="2"/>
-              <path d="M28 6 L48 15 L48 36 C48 48 28 58 28 58 C28 58 8 48 8 36 L8 15 Z" fill="none" stroke="rgba(200,149,42,0.25)" stroke-width="1"/>
-              <line x1="28" y1="18" x2="28" y2="50" stroke="#c8952a" stroke-width="2.5"/>
-              <line x1="16" y1="30" x2="40" y2="30" stroke="#c8952a" stroke-width="2.5"/>
-              <circle cx="28" cy="14" r="2" fill="#c8952a"/>
-            </svg>
-            <div class="logo-text-block" style="gap:4px">
-              <div class="logo-the">The</div>
-              <div class="logo-name" style="font-size:2rem">Free <span>Standard</span></div>
-              <div class="logo-tagline" style="font-size:.85rem">Independent · Faith · Freedom</div>
+        <div class="grid">
+          <div class="card featured" onclick="openArticle('globalistBlueprint')">
+            <div class="featured-left">
+              <div class="card-kicker">
+                <span class="tag">Deep Dive</span>
+                <span>March 3, 2026</span>
+              </div>
+              <h3>Operation “Epic Fury” Challenges Trump’s America First Framework</h3>
+              <p class="meta">
+                If “imminent threat” becomes a blank check, America First becomes whatever Washington says it is that day.
+                This is what real sovereignty requires: proof, limits, and a defined end state.
+              </p>
+            </div>
+            <div class="featured-right">
+              <div class="featured-quote">
+                “America First either means something — or it doesn’t.”
+              </div>
             </div>
           </div>
-          <div class="swatch-label">Primary — Dark Background</div>
-        </div>
 
-        <!-- Primary Light -->
-        <div class="brand-swatch light">
-          <div class="logo-mark" style="pointer-events:none">
-            <svg width="64" height="72" viewBox="0 0 56 64" fill="none">
-              <path d="M28 2 L52 12 L52 36 C52 50 28 62 28 62 C28 62 4 50 4 36 L4 12 Z" fill="none" stroke="#8b1a1a" stroke-width="2"/>
-              <path d="M28 6 L48 15 L48 36 C48 48 28 58 28 58 C28 58 8 48 8 36 L8 15 Z" fill="none" stroke="rgba(139,26,26,0.25)" stroke-width="1"/>
-              <line x1="28" y1="18" x2="28" y2="50" stroke="#8b1a1a" stroke-width="2.5"/>
-              <line x1="16" y1="30" x2="40" y2="30" stroke="#8b1a1a" stroke-width="2.5"/>
-              <circle cx="28" cy="14" r="2" fill="#8b1a1a"/>
-            </svg>
-            <div class="logo-text-block" style="gap:4px">
-              <div class="logo-the" style="color:#8b1a1a">The</div>
-              <div class="logo-name" style="font-size:2rem;color:#1a1a1a">Free <span style="color:#8b1a1a">Standard</span></div>
-              <div class="logo-tagline" style="font-size:.85rem;color:#7a6a5a">Independent · Faith · Freedom</div>
+          <div class="card" onclick="openArticle('americaFirstIsrael')">
+            <div class="card-inner">
+              <div class="card-kicker">
+                <span class="tag">Politics</span>
+                <span>March 3, 2026</span>
+              </div>
+              <h3>America First — Except When It Comes to Israel?</h3>
+              <p class="meta">
+                The conservative movement ditched neocon habits in most places — but one exception keeps reappearing.
+              </p>
+            </div>
+            <div class="card-footer">
+              <span class="card-action">Read</span>
+              <span class="pill">9 min</span>
             </div>
           </div>
-          <div class="swatch-label">Reversed — Light Background</div>
-        </div>
 
-        <!-- Crimson -->
-        <div class="brand-swatch crimson-bg">
-          <div class="logo-mark" style="pointer-events:none">
-            <svg width="64" height="72" viewBox="0 0 56 64" fill="none">
-              <path d="M28 2 L52 12 L52 36 C52 50 28 62 28 62 C28 62 4 50 4 36 L4 12 Z" fill="none" stroke="#fff" stroke-width="2" opacity="0.8"/>
-              <line x1="28" y1="18" x2="28" y2="50" stroke="#fff" stroke-width="2.5" opacity="0.9"/>
-              <line x1="16" y1="30" x2="40" y2="30" stroke="#fff" stroke-width="2.5" opacity="0.9"/>
-              <circle cx="28" cy="14" r="2" fill="#fff" opacity="0.8"/>
-            </svg>
-            <div class="logo-text-block" style="gap:4px">
-              <div class="logo-the" style="color:rgba(255,255,255,0.7)">The</div>
-              <div class="logo-name" style="font-size:2rem;color:#fff">Free <span style="color:#e2b84a">Standard</span></div>
-              <div class="logo-tagline" style="font-size:.85rem;color:rgba(255,255,255,0.6)">Independent · Faith · Freedom</div>
+          <div class="card" onclick="openWatch('watch1')">
+            <div class="card-inner">
+              <div class="card-kicker">
+                <span class="tag">Watch</span>
+                <span>March 3, 2026</span>
+              </div>
+              <h3>Featured Clip: Media Narrative Breakdown</h3>
+              <p class="meta">
+                A clip page with embed, sources, and your commentary — perfect for quick hits and analysis.
+              </p>
+            </div>
+            <div class="card-footer">
+              <span class="card-action">Watch</span>
+              <span class="pill">Video</span>
             </div>
           </div>
-          <div class="swatch-label" style="color:rgba(255,255,255,0.5)">On Crimson Background</div>
-        </div>
 
-        <!-- Stacked / Icon only -->
-        <div class="brand-swatch dark" style="flex-direction:row;gap:60px;flex-wrap:wrap;justify-content:center">
-          <!-- Shield mark only, large -->
-          <div style="display:flex;flex-direction:column;align-items:center;gap:12px">
-            <svg width="80" height="90" viewBox="0 0 56 64" fill="none">
-              <path d="M28 2 L52 12 L52 36 C52 50 28 62 28 62 C28 62 4 50 4 36 L4 12 Z" fill="none" stroke="#c8952a" stroke-width="2"/>
-              <path d="M28 6 L48 15 L48 36 C48 48 28 58 28 58 C28 58 8 48 8 36 L8 15 Z" fill="none" stroke="rgba(200,149,42,0.3)" stroke-width="1"/>
-              <line x1="28" y1="18" x2="28" y2="50" stroke="#c8952a" stroke-width="2.5"/>
-              <line x1="16" y1="30" x2="40" y2="30" stroke="#c8952a" stroke-width="2.5"/>
-              <circle cx="28" cy="14" r="2" fill="#c8952a"/>
-            </svg>
-            <div class="swatch-label">Shield Mark (Icon Only)</div>
-          </div>
-          <!-- Stacked text -->
-          <div style="display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center">
-            <div style="font-family:'Oswald',sans-serif;font-size:.6rem;letter-spacing:.3em;color:var(--gold);text-transform:uppercase">The</div>
-            <div style="font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:var(--warm-white);line-height:1">Free</div>
-            <div style="font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:var(--gold);line-height:1">Standard</div>
-            <div style="font-family:'EB Garamond',serif;font-style:italic;font-size:.8rem;color:var(--text-muted);margin-top:6px;letter-spacing:.06em">Independent · Faith · Freedom</div>
-            <div class="swatch-label" style="margin-top:8px">Stacked Wordmark</div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Color Palette -->
-      <div style="margin-top:60px">
-        <div class="eyebrow">Brand Colors</div>
-        <h2 class="section-title" style="font-size:1.8rem;margin-bottom:28px">Color Palette</h2>
-        <div class="brand-colors">
-          <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
-            <div class="color-chip" style="background:#0a1628"><span>Navy</span></div>
-            <div style="font-family:'Oswald',sans-serif;font-size:.6rem;letter-spacing:.1em;color:var(--text-muted)">#0A1628</div>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
-            <div class="color-chip" style="background:#8b1a1a"><span>Crimson</span></div>
-            <div style="font-family:'Oswald',sans-serif;font-size:.6rem;letter-spacing:.1em;color:var(--text-muted)">#8B1A1A</div>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
-            <div class="color-chip" style="background:#c8952a"><span style="color:rgba(0,0,0,0.7)">Gold</span></div>
-            <div style="font-family:'Oswald',sans-serif;font-size:.6rem;letter-spacing:.1em;color:var(--text-muted)">#C8952A</div>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
-            <div class="color-chip" style="background:#e2b84a"><span style="color:rgba(0,0,0,0.7)">Gold Light</span></div>
-            <div style="font-family:'Oswald',sans-serif;font-size:.6rem;letter-spacing:.1em;color:var(--text-muted)">#E2B84A</div>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
-            <div class="color-chip" style="background:#f4ede0"><span style="color:rgba(0,0,0,0.5)">Parchment</span></div>
-            <div style="font-family:'Oswald',sans-serif;font-size:.6rem;letter-spacing:.1em;color:var(--text-muted)">#F4EDE0</div>
-          </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
-            <div class="color-chip" style="background:#080f1a"><span>Deep</span></div>
-            <div style="font-family:'Oswald',sans-serif;font-size:.6rem;letter-spacing:.1em;color:var(--text-muted)">#080F1A</div>
+          <div class="card" onclick="showPage('articles')">
+            <div class="card-inner">
+              <div class="card-kicker">
+                <span class="tag">Library</span>
+                <span>Updated</span>
+              </div>
+              <h3>Browse All Articles</h3>
+              <p class="meta">Jump into the full archive and open any post in one click.</p>
+            </div>
+            <div class="card-footer">
+              <span class="card-action">Browse</span>
+              <span class="pill">Archive</span>
+            </div>
           </div>
         </div>
       </div>
+    </section>
+  </main>
 
-      <!-- Typography -->
-      <div style="margin-top:60px;padding:40px;border:1px solid var(--border)">
-        <div class="eyebrow">Typography</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:40px;margin-top:28px">
-          <div>
-            <div style="font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;color:var(--warm-white);line-height:1.1;margin-bottom:12px">Playfair Display</div>
-            <div style="font-family:'Oswald',sans-serif;font-size:.65rem;letter-spacing:.16em;color:var(--gold);text-transform:uppercase;margin-bottom:8px">Display / Headlines</div>
-            <div style="font-size:.88rem;color:var(--text-muted);line-height:1.6">Used for all headlines, op-ed pull quotes, and the primary wordmark. Its editorial authority anchors every page.</div>
+  <!-- ARTICLES -->
+  <main id="page-articles" class="page">
+    <section class="page-hero">
+      <div class="wrap">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> Articles</div>
+        <h1>Long-form reporting & analysis</h1>
+        <p class="lede">Click any article to open the full detail page with listen mode.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-title">All Articles</div>
+          <span class="pill">Newest first</span>
+        </div>
+
+        <div class="grid">
+          <div class="card" onclick="openArticle('globalistBlueprint')">
+            <div class="card-inner">
+              <div class="card-kicker"><span class="tag">Deep Dive</span><span>March 3, 2026</span></div>
+              <h3>Operation “Epic Fury” Challenges Trump’s America First Framework</h3>
+              <p class="meta">The “imminent threat” claim needs proof. America First demands a defined end state.</p>
+            </div>
+            <div class="card-footer"><span class="card-action">Read</span><span class="pill">10 min</span></div>
           </div>
-          <div>
-            <div style="font-family:'EB Garamond',serif;font-size:1.5rem;color:var(--warm-white);line-height:1.3;margin-bottom:12px;font-style:italic">EB Garamond</div>
-            <div style="font-family:'Oswald',sans-serif;font-size:.65rem;letter-spacing:.16em;color:var(--gold);text-transform:uppercase;margin-bottom:8px">Body / Italic</div>
-            <div style="font-size:.88rem;color:var(--text-muted);line-height:1.6">Used for body copy, taglines, and pull quotes. A classic, readable serif with deep historical roots.</div>
+
+          <div class="card" onclick="openArticle('americaFirstIsrael')">
+            <div class="card-inner">
+              <div class="card-kicker"><span class="tag">Politics</span><span>March 3, 2026</span></div>
+              <h3>America First — Except When It Comes to Israel?</h3>
+              <p class="meta">A tension inside the movement: sovereignty and spending scrutiny… with an exception.</p>
+            </div>
+            <div class="card-footer"><span class="card-action">Read</span><span class="pill">9 min</span></div>
           </div>
-          <div>
-            <div style="font-family:'Oswald',sans-serif;font-size:1.5rem;font-weight:600;letter-spacing:.06em;color:var(--warm-white);margin-bottom:12px;text-transform:uppercase">OSWALD</div>
-            <div style="font-family:'Oswald',sans-serif;font-size:.65rem;letter-spacing:.16em;color:var(--gold);text-transform:uppercase;margin-bottom:8px">Labels / UI / Navigation</div>
-            <div style="font-size:.88rem;color:var(--text-muted);line-height:1.6">Used for navigation, tags, labels, and eyebrows. Strong, condensed, and unmistakably purposeful.</div>
+
+          <div class="card" onclick="openArticle('reclaimingPublicSquare')">
+            <div class="card-inner">
+              <div class="card-kicker"><span class="tag">Faith</span><span>June 10, 2025</span></div>
+              <h3>Reclaiming the Public Square: Why Christians Can't Afford to Stay Silent</h3>
+              <p class="meta">Neutrality is a myth. Presence is part of witness.</p>
+            </div>
+            <div class="card-footer"><span class="card-action">Read</span><span class="pill">7 min</span></div>
+          </div>
+
+          <div class="card" onclick="openArticle('americaFirstTown')">
+            <div class="card-inner">
+              <div class="card-kicker"><span class="tag">Economy</span><span>June 7, 2025</span></div>
+              <h3>What “America First” Actually Means for Your Town</h3>
+              <p class="meta">If it hollows out Main Street, it isn’t sovereignty — it’s lobbyist first.</p>
+            </div>
+            <div class="card-footer"><span class="card-action">Read</span><span class="pill">9 min</span></div>
+          </div>
+
+          <div class="card" onclick="openArticle('fiveQuestionsCable')">
+            <div class="card-inner">
+              <div class="card-kicker"><span class="tag">Media</span><span>June 3, 2025</span></div>
+              <h3>Five Questions the Cable Networks Will Never Ask</h3>
+              <p class="meta">When sponsors fund the network and the expert, the interview is theater.</p>
+            </div>
+            <div class="card-footer"><span class="card-action">Read</span><span class="pill">5 min</span></div>
+          </div>
+
+          <div class="card" onclick="openArticle('washingtonFarewell')">
+            <div class="card-inner">
+              <div class="card-kicker"><span class="tag">History</span><span>May 29, 2025</span></div>
+              <h3>Washington's Farewell Address: The Warning We Ignored</h3>
+              <p class="meta">Foreign influence, factional obsession, and debt — the timeless threats to a republic.</p>
+            </div>
+            <div class="card-footer"><span class="card-action">Read</span><span class="pill">8 min</span></div>
+          </div>
+
+          <div class="card" onclick="openArticle('rightToBearArms')">
+            <div class="card-inner">
+              <div class="card-kicker"><span class="tag">Rights</span><span>May 22, 2025</span></div>
+              <h3>The Right to Bear Arms Is the Right That Protects All Others</h3>
+              <p class="meta">Deterrence and citizenship — why rights are recognized, not granted.</p>
+            </div>
+            <div class="card-footer"><span class="card-action">Read</span><span class="pill">10 min</span></div>
           </div>
         </div>
       </div>
+    </section>
+  </main>
 
+  <!-- ARTICLE DETAIL -->
+  <main id="page-article-detail" class="page">
+    <section class="page-hero">
+      <div class="wrap">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> The Free Standard</div>
+        <h1 id="article-title">Article Title</h1>
+        <p id="article-meta">Date · Category · Read Time</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="detail-wrap">
+        <div class="article-actions">
+          <a class="btn btn-outline-white" href="javascript:void(0)" onclick="showPage('articles')">← Back</a>
+          <button class="btn btn-red" id="listen-btn" type="button" onclick="toggleListen()">Listen</button>
+          <button class="btn btn-gold" id="stop-btn" type="button" onclick="stopListen()">Stop</button>
+          <span id="listen-status" style="font-family:'Oswald',sans-serif;font-size:.7rem;letter-spacing:.12em;color:var(--text-muted);text-transform:uppercase"></span>
+        </div>
+
+        <div class="detail-body" id="article-content">
+          <p>Select an article to read.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- WATCH -->
+  <main id="page-watch" class="page">
+    <section class="page-hero">
+      <div class="wrap">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> Watch</div>
+        <h1>Clips with commentary</h1>
+        <p class="lede">Embed YouTube videos, add your notes, and link out to sources.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="section-title">All Watch Posts</div>
+          <span class="pill">Click to open</span>
+        </div>
+
+        <div class="grid">
+          <div class="card" onclick="openWatch('watch1')">
+            <div class="card-inner">
+              <div class="card-kicker"><span class="tag">Featured</span><span>March 3, 2026</span></div>
+              <h3>Featured Clip: Media Narrative Breakdown</h3>
+              <p class="meta">A ready-made watch template with embed + commentary section.</p>
+            </div>
+            <div class="card-footer"><span class="card-action">Watch</span><span class="pill">Video</span></div>
+          </div>
+
+          <div class="card" onclick="openWatch('watch2')">
+            <div class="card-inner">
+              <div class="card-kicker"><span class="tag">Briefing</span><span>March 2, 2026</span></div>
+              <h3>Clip Two: Quick Context</h3>
+              <p class="meta">Drop in a YouTube URL, add your paragraph, publish.</p>
+            </div>
+            <div class="card-footer"><span class="card-action">Watch</span><span class="pill">Video</span></div>
+          </div>
+
+          <div class="card" onclick="openWatch('watch3')">
+            <div class="card-inner">
+              <div class="card-kicker"><span class="tag">Clip</span><span>Feb 28, 2026</span></div>
+              <h3>Clip Three: Why This Matters</h3>
+              <p class="meta">Keep a clean library of short-form content alongside articles.</p>
+            </div>
+            <div class="card-footer"><span class="card-action">Watch</span><span class="pill">Video</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- WATCH DETAIL -->
+  <main id="page-watch-detail" class="page">
+    <section class="page-hero">
+      <div class="wrap">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> Watch</div>
+        <h1 id="watch-title">Video Title</h1>
+        <p id="watch-meta">Date · Category · Read Time</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="detail-wrap">
+        <div class="article-actions">
+          <a class="btn btn-outline-white" href="javascript:void(0)" onclick="showPage('watch')">← Back</a>
+          <a class="btn btn-gold" id="watch-open-youtube" href="#" target="_blank" rel="noopener">Open on YouTube</a>
+        </div>
+
+        <div class="video" id="watch-embed"></div>
+
+        <div style="height:16px"></div>
+
+        <div class="detail-body" id="watch-commentary">
+          <p>Open a watch post to see commentary.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ABOUT -->
+  <main id="page-about" class="page">
+    <section class="page-hero">
+      <div class="wrap">
+        <div class="eyebrow"><span class="eyebrow-dot"></span> About</div>
+        <h1>What this site is</h1>
+        <p class="lede">
+          A clean, fast, single-file editorial site. You can host it anywhere and edit the article/watch
+          objects in the script to publish.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="detail-body">
+          <h3>How to publish</h3>
+          <ol>
+            <li>Edit the <strong>articles</strong> object in the script and paste HTML inside <code>content</code>.</li>
+            <li>Edit the <strong>watches</strong> object with YouTube links + embed URLs + commentary.</li>
+            <li>Add a new card in the Articles/Watch grids that calls <code>openArticle('key')</code> or <code>openWatch('key')</code>.</li>
+          </ol>
+          <h3>Notes</h3>
+          <ul>
+            <li>This template is fully static—no backend required.</li>
+            <li>“Listen” uses the browser’s built-in text-to-speech.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-wrap">
+      <div>
+        <div class="footer-small">The Free Standard</div>
+        <div>Truth. Sovereignty. Accountability.</div>
+      </div>
+      <div>© <span id="year"></span> All rights reserved.</div>
     </div>
-  </section>
-</div>
+  </footer>
 
+  <script>
+  /* =========================
+     DATA
+  ========================= */
 
-<!-- ══════════════════════════════════════
-     ARTICLE DETAIL PAGE
-════════════════════════════════════════════ -->
-<div id="page-article-detail" class="page">
-
-  <section class="page-hero">
-    <h1 id="article-title">Article Title</h1>
-    <p id="article-meta">Date · Category · Read Time</p>
-  </section>
-
-  <section style="padding:60px 0;background: var(--deep);">
-    <div class="section-wrap" style="max-width:800px;">
-      <div style="margin-bottom:18px;">
-        <a class="btn btn-outline-white" onclick="showPage('articles')" style="padding:10px 18px;">← Back to Articles</a>
-      </div>
-       <div class="article-actions">
-        <button class="btn btn-red" id="listen-btn" type="button" onclick="toggleListen()">Listen</button>
-        <button class="btn btn-outline-white" id="stop-btn" type="button" onclick="stopListen()" style="padding:10px 18px;">Stop</button>
-        <span id="listen-status" style="margin-left:12px;font-family:'Oswald',sans-serif;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);"></span>
-      </div>
-      <div id="article-content" style="font-size:1.1rem;line-height:1.9;color: var(--text-body);">
-        <!-- Article content loads here -->
-      </div>
-    </div>
-  </section>
-
-</div>
-
-<footer>
-  <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="logo-mark" onclick="showPage('home')" style="margin-bottom:12px">
-          <svg width="38" height="44" viewBox="0 0 56 64" fill="none">
-            <path d="M28 2 L52 12 L52 36 C52 50 28 62 28 62 C28 62 4 50 4 36 L4 12 Z" stroke="#c8952a" stroke-width="1.5" fill="none"/>
-            <line x1="28" y1="18" x2="28" y2="50" stroke="#c8952a" stroke-width="2"/>
-            <line x1="16" y1="30" x2="40" y2="30" stroke="#c8952a" stroke-width="2"/>
-          </svg>
-          <div class="logo-text-block">
-            <div class="logo-the">The</div>
-            <div class="logo-name">Free <span>Standard</span></div>
-          </div>
-        </div>
-        <p>Independent media rooted in Christian faith and American founding principles. No lobbyists. No agenda-driven sponsors. No permission required to tell the truth.</p>
-      </div>
-      <div class="footer-col">
-        <h5>Content</h5>
+  // WATCHES
+  const watches = {
+    watch1: {
+      title: "Featured Clip: Media Narrative Breakdown",
+      meta: "March 3, 2026 · Featured Watch · 6 min read",
+      youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      youtubeEmbed: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      commentary: `
+        <p><strong>Use this section for your commentary.</strong> Add context, call out omissions, and link to receipts.</p>
+        <h3>What to Notice</h3>
         <ul>
-          <li><a onclick="showPage('podcast')">Podcast</a></li>
-          <li><a onclick="showPage('articles')">Articles</a></li>
-          <li><a onclick="showPage('opeds')">Op-Eds</a></li>
-          <li><a>Archives</a></li>
+          <li>How language frames motive.</li>
+          <li>What evidence is asserted vs. shown.</li>
+          <li>Who benefits from escalation.</li>
         </ul>
-      </div>
-      <div class="footer-col">
-        <h5>The Standard</h5>
-        <ul>
-          <li><a onclick="showPage('mission')">Our Mission</a></li>
-          <li><a onclick="showPage('about')">About Us</a></li>
-          <li><a onclick="showPage('about')">Write For Us</a></li>
-          <li><a onclick="showPage('brand')">Brand Assets</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Listen & Follow</h5>
-        <ul>
-          <li><a>Rumble</a></li>
-          <li><a>Substack</a></li>
-          <li><a>X / Twitter</a></li>
-          <li><a>Apple Podcasts</a></li>
-          <li><a>Spotify</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p class="footer-copy">© 2025 The Free Standard. All rights reserved. No rights sold to anyone.</p>
-      <div class="footer-motto">Free Thought · Faith · Independence</div>
-    </div>
-  </div>
-</footer>
-
-<script>
-
-// ══════════════════════════════════════
-// SIMPLE ARTICLE SYSTEM (DRAFTS)
-// Edit article bodies inside the `articles` object.
-// ═════════════════════════════════════=
-const articles = {
-  globalistBlueprint: {
-    title: "Operation \"Epic Fury\" Challenges Trump's America First Framework",
-    meta: "March 3, 2026 · Deep Dive · 10 min read",
-    content: `
-      <p><strong>The White House says Operation “Epic Fury” is a precise campaign to eliminate an “imminent” threat.</strong> If that’s true, the evidence should be clear enough to show the American people. Instead, politicians and their media machines continue to blindly tell the public that the country was in danger, and action needed to be taken.</p>
-
-      <p>“America First” is not measured by how quickly we can escalate into action. It’s measured by whether American citizens are safer and better off when the dust settles — and whether the costs are justified <em>before</em> the bill comes due. This includes having a White House that transparently shows the cost, reasoning, and benefit.</p>
-
-      <h3>The “imminent threat” claim needs more than repetition</h3>
-      <p>In the administration’s own messaging, “imminent” is the word doing the heavy lifting. The White House describes Epic Fury as necessary to stop a looming danger, and U.S. Central Command framed early strikes as focused on targets posing an “imminent threat.”</p>
-
-      <p><strong>That’s a claim — not proof.</strong> Americans have heard “trust us” before. If the threat to the U.S. homeland was truly imminent, release as much supporting intelligence as possible (with sources protected) and explain the specific trigger: <em>what</em> was about to happen, <em>where</em>, and <em>against whom</em>.</p>
-
-      <blockquote style="margin:24px 0;padding:18px 22px;border-left:3px solid var(--crimson);background:rgba(139,26,26,0.06);font-style:italic;color:var(--text-body);">
-        “This was our last best chance to strike.” <span style="font-style:normal;color:var(--text-muted);">— President Trump, as reported in CBS live coverage</span>
-      </blockquote>
-
-      <p>If the standard becomes “last best chance” without publicly testable evidence, then any future strike can be justified the same way — and “America First” becomes whatever Washington says it is that day.</p>
-
-      <h3>America First requires an end state — not “wars can be fought forever”</h3>
-      <p>America First voters were promised fewer entanglements, not new ones. Yet the public messaging around Epic Fury has already flirted with open-endedness. Remember operation "Midnight Hammer" in June of 2025, when we struck Iranian nuclean facilities with seven B-2 bombers? U.S. officials reported "extremely severe damage and destruction" to the targeted facilities, significantly degrading Iran's nuclear capabilities. Less than one year later, we are back at it again in multiples of scale. The question isn’t whether the U.S. can project power. The question is whether we’re locking ourselves into a regional war spiral with no definable finish line.</p>
-
-      <p>Define victory in plain English:</p>
-      <ul style="margin:12px 0 18px 22px;color:var(--text-body);line-height:1.8;">
-        <li>What must Iran stop doing — specifically — for operations to end?</li>
-        <li>What conditions trigger escalation or de-escalation?</li>
-        <li>What is the plan if strikes don’t change behavior?</li>
-      </ul>
-
-      <h3>The costs of our actions are already landing: energy shocks and global disruption</h3>
-      <p>Even if one supports the operation in principle at face value, America First requires honesty about second-order effects. Energy markets and shipping lanes don’t care about talking points.</p>
-
-      <p>Reuters reported that the conflict has driven major oil and gas disruptions, including impacts tied to Gulf production and LNG operations, while also highlighting the vulnerability of key chokepoints like the Strait of Hormuz. That’s the kind of disruption that shows up as higher prices, inflation pressure, and supply chain headaches back home.</p>
-
-      <p>It’s not “isolationism” to acknowledge this. It’s realism. If the operation’s consequences include volatility in fuel costs and broader economic spillover, then the burden lands on American families first — the exact opposite of what “America First” implies.</p>
-
-      <h3>The Israel factor is policy reality — and it must not become autopilot</h3>
-      <p>Israel has serious security interests related to Iran. That’s not controversial. What <em>is</em> controversial is whether U.S. policy becomes an automatic extension of another country’s regional strategy without clear U.S.-defined objectives and guardrails.</p>
-
-      <p>Advocacy and influence campaigns exist in many forms, and multiple outlets have reported on efforts to shape U.S. opinion and political incentives. The point for Americans is simple: <strong>our leaders should be able to justify this war on U.S. interests alone</strong>, not on momentum, pressure, or media framing.</p>
-
-      <h3>America First means prove it — then limit it</h3>
-      <p>If the administration wants the public’s buy-in, it should do three things immediately:</p>
-      <ol style="margin:12px 0 18px 22px;color:var(--text-body);line-height:1.8;">
-        <li><strong>Declassify the best evidence</strong> supporting the “imminent threat” claim.</li>
-        <li><strong>State the end condition</strong> that ends operations and prevents mission creep.</li>
-        <li><strong>Publish a cost assessment</strong> that includes energy, shipping, cyber, and domestic security impacts.</li>
-      </ol>
-
-      <p>Otherwise, Epic Fury risks becoming another chapter in the same post-9/11 pattern: sweeping claims, thin transparency, and costs that compound for years — while families at home are told to accept it as “patriotism.”</p>
-
-      <p style="margin-top:18px;color:var(--text-muted);font-size:0.98rem;">
-        <strong>Sources:</strong>
-        White House statement on Operation Epic Fury; U.S. Central Command press release; CBS live updates including reported presidential remarks; Reuters reporting on energy and shipping disruptions; reporting on Israel-linked U.S. outreach/marketing efforts.
-      </p>
-    `
-  },
-
-   americaFirstIsrael: {
-    title: "America First — Except When It Comes to Israel?",
-    meta: "March 3, 2026 · Conservative Politics · 9 min read",
-    content: `
-      <p>For nearly a decade, the modern conservative movement has rallied around a simple, powerful idea: <strong>America First.</strong></p>
-
-      <p>Secure our border. Protect American jobs. End endless wars. Stop sending billions overseas while our own cities decay.</p>
-
-      <p>That doctrine reshaped the Republican Party in 2016. It rejected the neoconservative reflex for foreign entanglements and instead elevated national sovereignty and domestic renewal as the central pillars of governance.</p>
-
-      <p><strong>Yet there is one glaring exception.</strong></p>
-
-      <p>When it comes to Israel — and particularly to the government of Prime Minister Benjamin Netanyahu — the America First instinct seems to vanish.</p>
-
-      <p><strong>Why?</strong></p>
-
-      <p>If we are truly serious about national sovereignty, fiscal responsibility, and strategic restraint, then no alliance should be immune from scrutiny. Not Ukraine. Not NATO. And not Israel.</p>
-
-      <h3>The Tension Inside the Conservative Movement</h3>
-      <p>Grassroots conservatives have grown skeptical of global commitments. They question foreign aid packages, international institutions, and open-ended military guarantees. They ask hard questions about cost, strategy, and return on investment.</p>
-
-      <p>Yet when Congress approves billions in aid to Israel — on top of the longstanding $3.8 billion annual baseline — dissent within Republican leadership is minimal. The support is often framed as automatic, unquestionable, and morally obligatory.</p>
-
-      <p>That posture feels increasingly disconnected from the movement’s own stated principles.</p>
-
-      <p><em>America First was never supposed to mean “America First, unless.”</em></p>
-
-      <h3>The Fiscal Question</h3>
-      <p>The United States has provided Israel with more foreign aid than any other country since World War II. The current memorandum of understanding guarantees billions annually in military assistance, supplemented by emergency packages during periods of conflict.</p>
-
-      <p>Supporters argue this represents a small fraction of the federal budget. Technically, that’s true.</p>
-
-      <p><strong>But America First was never about percentages. It was about priorities.</strong></p>
-
-      <p>When:</p>
-      <ul style="margin:12px 0 18px 22px;color:var(--text-body);line-height:1.8;">
-        <li>The southern border remains under strain,</li>
-        <li>Veterans struggle with healthcare access,</li>
-        <li>Industrial towns in the Midwest remain hollowed out,</li>
-      </ul>
-
-      <p>voters are justified in asking whether foreign aid — even to allies — should be automatic rather than conditional.</p>
-
-      <p>Conservatives have rightly argued that European nations should shoulder more of their own defense burdens. Why should that principle stop at the Mediterranean?</p>
-
-      <p>Israel is a technologically advanced country with a GDP per capita comparable to Western Europe. It fields one of the most capable militaries in the region. If the goal of foreign aid is stabilization and development, Israel no longer fits the traditional definition of a dependent state.</p>
-
-      <p>An America First framework would at least ask: <strong>Should this relationship evolve?</strong></p>
-
-      <h3>Strategic Entanglement</h3>
-      <p>There is also the strategic dimension.</p>
-
-      <p>The Middle East has consumed enormous American blood and treasure over the last two decades. Many Trump voters supported him precisely because he promised to reduce these entanglements.</p>
-
-      <p>While the U.S. and Israel share intelligence cooperation and security interests, the two nations do not have identical geopolitical priorities. Israeli security decisions can escalate regional tensions in ways that affect American assets, American service members, and American diplomatic relationships.</p>
-
-      <p>A conservative foreign policy rooted in realism should assess alliances through a cold calculation:</p>
-
-      <blockquote style="margin:24px 0;padding:18px 22px;border-left:3px solid var(--crimson);background:rgba(139,26,26,0.06);font-style:italic;color:var(--text-body);">
-        Does this commitment enhance American security directly?<br/>
-        Or does it risk drawing the U.S. deeper into regional conflicts that are not existential to the homeland?
-      </blockquote>
-
-      <p>Those are not anti-Israel questions. They are pro-sovereignty questions.</p>
-
-      <h3>The Politics of Unquestioned Alignment</h3>
-      <p>Another uncomfortable reality: support for Israel has long been a bipartisan litmus test in Washington. Major lobbying organizations advocating for strong U.S.–Israel ties are among the most organized and well-funded in American politics.</p>
-
-      <p>That does not imply conspiracy or illegitimacy — lobbying is a constitutionally protected activity.</p>
-
-      <p>But if conservatives are willing to critique corporate lobbying, Big Tech influence, and defense industry capture, intellectual consistency demands the same scrutiny here.</p>
-
-      <p><strong>The concern is not ethnic or religious. It is structural.</strong></p>
-
-      <p>When any foreign policy position becomes politically untouchable — insulated from normal debate — representation suffers.</p>
-
-      <p><em>America First was supposed to dismantle political sacred cows, not preserve them.</em></p>
-
-      <h3>The Netanyahu Factor</h3>
-      <p>This conversation becomes sharper when framed around Benjamin Netanyahu specifically.</p>
-
-      <p>Netanyahu is a skilled and assertive political leader. He has cultivated deep ties within American political circles and has at times engaged directly with Congress during periods of tension with U.S. administrations.</p>
-
-      <p>That assertiveness may serve Israeli interests — and Israeli voters.</p>
-
-      <p>But American conservatives must ask a separate question:</p>
-
-      <p><strong>Does reflexive alignment with a specific foreign leader serve American voters?</strong></p>
-
-      <p>Supporting Israel as a strategic ally is one thing. Structuring U.S. policy in a way that appears closely aligned with the political fortunes of a foreign prime minister is another.</p>
-
-      <p>America First should mean that U.S. foreign policy decisions are determined solely by American strategic calculations — not by personal alliances, political optics, or historical inertia.</p>
-
-      <h3>Counterarguments Worth Taking Seriously</h3>
-      <p>A fair assessment must acknowledge the other side.</p>
-
-      <p>Israel provides:</p>
-      <ul style="margin:12px 0 18px 22px;color:var(--text-body);line-height:1.8;">
-        <li>Significant intelligence cooperation,</li>
-        <li>Advanced defense technology partnerships,</li>
-        <li>A stable democratic partner in a volatile region.</li>
-      </ul>
-
-      <p>These are not trivial advantages.</p>
-
-      <p>Moreover, abrupt disengagement could destabilize regional balances and embolden adversaries hostile to both Israel and the United States.</p>
-
-      <p>The question, however, is not whether Israel is an ally. It is whether the structure of the relationship reflects current realities — or Cold War-era assumptions.</p>
-
-      <p><strong>Alliances should mature. They should recalibrate as both partners evolve.</strong></p>
-
-      <h3>What Would America First Actually Require?</h3>
-      <p>A consistent America First doctrine would not demand hostility toward Israel.</p>
-
-      <p>It would demand normalcy.</p>
-
-      <ul style="margin:12px 0 18px 22px;color:var(--text-body);line-height:1.8;">
-        <li>Aid tied to clear reciprocal benchmarks.</li>
-        <li>Strategic cooperation grounded in mutual benefit.</li>
-        <li>No automatic escalatory commitments.</li>
-        <li>No policy exemptions from fiscal scrutiny.</li>
-      </ul>
-
-      <p>It would treat Israel as a respected sovereign partner — not as a permanent ward of American taxpayers, nor as a taboo subject beyond conservative debate.</p>
-
-      <p>Most importantly, it would restore a simple hierarchy:</p>
-
-      <p><strong>The American government exists to serve American citizens first.</strong></p>
-
-      <p>That principle does not preclude alliances. It simply insists they be evaluated through the same lens applied everywhere else.</p>
-
-      <h3>The Real Conservative Test</h3>
-      <p>For years, conservatives criticized the bipartisan foreign policy establishment for placing global strategy above domestic renewal.</p>
-
-      <p>If that critique was sincere, it must apply universally.</p>
-
-      <p><strong>America First cannot be selective.</strong></p>
-
-      <p>If Republicans truly believe in sovereignty, fiscal restraint, and strategic realism, then every foreign relationship — even the most historic ones — should withstand open examination.</p>
-
-      <p>Not out of hostility.<br/>Not out of resentment.<br/>But out of principle.</p>
-
-      <p><strong>Because in the end, America First either means something — or it doesn’t.</strong></p>
-    `
-  },
-   
-  reclaimingPublicSquare: {
-    title: "Reclaiming the Public Square: Why Christians Can't Afford to Stay Silent",
-    meta: "June 10, 2025 · Faith & Culture · 7 min read",
-    content: `
-      <p>Many believers have been convinced that silence equals virtue. It doesn’t.</p>
-
-      <h3>Neutrality Is a Myth</h3>
-      <p>Every policy reflects a moral assumption. The only question is whose morality sets the rules.</p>
-
-      <h3>Witness Requires Presence</h3>
-      <p>Christian courage isn’t loudness — it’s steadiness. It’s showing up, speaking clearly, and refusing to trade truth for comfort.</p>
-
-      <p><em>Draft note:</em> Add Scripture references, historical examples, and practical steps for readers.</p>
-    `
-  },
-
-  americaFirstTown: {
-    title: "What \"America First\" Actually Means for Your Town — Not Just Your Bumper Sticker",
-    meta: "June 7, 2025 · Economy · 9 min read",
-    content: `
-      <p>Slogans are easy. Policy is harder.</p>
-
-      <h3>Trade Deals vs. Main Street</h3>
-      <p>If a policy benefits multinational corporations but hollows out local industry, it isn’t America First — it’s lobbyist first.</p>
-
-      <h3>Local Resilience</h3>
-      <p>Real independence begins with resilient communities: durable jobs, local investment, and supply chains that don’t collapse the moment a port closes.</p>
-
-      <p><em>Draft note:</em> Add data points, charts, and a “What You Can Do Locally” section.</p>
-    `
-  },
-
-  fiveQuestionsCable: {
-    title: "Five Questions the Cable Networks Will Never Ask Their Defense Contractor Guests",
-    meta: "June 3, 2025 · Media · 5 min read",
-    content: `
-      <p>When the same sponsors fund the network and the “expert,” the interview is theater.</p>
-
-      <h3>The Five Questions</h3>
-      <ol>
-        <li>Who pays you — directly or indirectly?</li>
-        <li>What contracts does your employer hold right now?</li>
-        <li>What policy outcome benefits your balance sheet?</li>
-        <li>What’s the historical track record of your last 5 predictions?</li>
-        <li>What counter-arguments did you ignore to get here?</li>
-      </ol>
-
-      <p><em>Draft note:</em> Swap in your own sharper questions and add examples of real interviews.</p>
-    `
-  },
-
-  washingtonFarewell: {
-    title: "Washington's Farewell Address: The Warning We Were Given and Chose to Ignore",
-    meta: "May 29, 2025 · History · 8 min read",
-    content: `
-      <p>Washington didn’t write his farewell as a victory lap. He wrote it as a warning.</p>
-
-      <h3>Factions, Foreign Influence, and Debt</h3>
-      <p>He cautioned against the habits that destroy republics: factional obsession, entangling alliances, and short-term thinking disguised as patriotism.</p>
-
-      <p><em>Draft note:</em> Add excerpts (brief quotes), context, and a section tying his warnings to today’s incentives.</p>
-    `
-  },
-
-  rightToBearArms: {
-    title: "The Right to Bear Arms Is the Right That Protects All Others",
-    meta: "May 22, 2025 · 2nd Amendment · 10 min read",
-    content: `
-      <p>In a free society, rights aren’t granted by government — they’re recognized.</p>
-
-      <h3>Deterrence and Citizenship</h3>
-      <p>The point is not violence. The point is restraint: the government behaves differently when citizens can resist tyranny.</p>
-
-      <p><em>Draft note:</em> Add historical citations, court cases, and a section on responsibility and safe stewardship.</p>
-    `
-  }
-};
-
-// Reading progress bar logic
-function updateReadingProgress() {
-  const progressWrap = document.getElementById('reading-progress');
-  const bar = document.getElementById('reading-progress-bar');
-  const article = document.getElementById('article-content');
-
-  const articlePageActive = document.getElementById('page-article-detail')?.classList.contains('active');
-  if (!progressWrap || !bar || !article || !articlePageActive) {
-    if (progressWrap) progressWrap.style.display = 'none';
-    return;
-  }
-
-  progressWrap.style.display = 'block';
-
-  const rect = article.getBoundingClientRect();
-  const viewportH = window.innerHeight || document.documentElement.clientHeight;
-
-  const articleTopInDoc = window.scrollY + rect.top;
-  const articleHeight = article.offsetHeight;
-
-  const scrollPos = window.scrollY;
-  const start = articleTopInDoc - 140;
-  const end = articleTopInDoc + articleHeight - viewportH * 0.35;
-
-  const raw = (scrollPos - start) / (end - start);
-  const pct = Math.max(0, Math.min(1, raw)) * 100;
-
-  bar.style.width = pct.toFixed(2) + '%';
-}
-
-window.addEventListener('scroll', updateReadingProgress, { passive: true });
-window.addEventListener('resize', updateReadingProgress);
-
-function openArticle(articleKey) {
-  const article = articles[articleKey];
-  if (!article) return;
-
-  const titleEl = document.getElementById("article-title");
-  const metaEl = document.getElementById("article-meta");
-  const contentEl = document.getElementById("article-content");
-
-  if (!titleEl || !metaEl || !contentEl) return;
-
-  titleEl.innerText = article.title;
-  metaEl.innerText = article.meta;
-  contentEl.innerHTML = article.content;
-
-  showPage('article-detail');
-  setTimeout(updateReadingProgress, 50);
-}
-
-function showPage(name) {
-   stopListen();
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
-
-  document.querySelectorAll('.header-nav a').forEach(a => a.classList.remove('active'));
-  const navEl = document.getElementById('nav-' + name);
-  if (navEl) navEl.classList.add('active');
-
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-  setTimeout(updateReadingProgress, 50);
-}
-   let ttsUtterance = null;
-let ttsIsPaused = false;
-
-function getReadableTextFromArticle() {
-  const contentEl = document.getElementById("article-content");
-  if (!contentEl) return "";
-  // Pull text only (no tags), clean spacing a bit
-  return contentEl.innerText.replace(/\s+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
-}
-
-function updateListenUI(stateText, buttonText) {
-  const status = document.getElementById("listen-status");
-  const btn = document.getElementById("listen-btn");
-  if (status) status.textContent = stateText || "";
-  if (btn) btn.textContent = buttonText || "Listen";
-}
-
-function toggleListen() {
-  if (!("speechSynthesis" in window)) {
-    alert("Sorry — your browser doesn’t support text-to-speech.");
-    return;
-  }
-
-  const synth = window.speechSynthesis;
-
-  // If currently speaking, toggle pause/resume
-  if (synth.speaking && !ttsIsPaused) {
-    synth.pause();
-    ttsIsPaused = true;
-    updateListenUI("Paused", "Resume");
-    return;
-  }
-  if (synth.speaking && ttsIsPaused) {
-    synth.resume();
-    ttsIsPaused = false;
-    updateListenUI("Playing", "Pause");
-    return;
-  }
-
-  // Start fresh
-  const text = getReadableTextFromArticle();
-  if (!text) return;
-
-  ttsUtterance = new SpeechSynthesisUtterance(text);
-  ttsUtterance.rate = 1.0;    // tweak if you want
-  ttsUtterance.pitch = 1.0;
-
-  ttsUtterance.onstart = () => {
-    ttsIsPaused = false;
-    updateListenUI("Playing", "Pause");
+        <p><strong>Bottom line:</strong> Replace this paragraph with your actual take.</p>
+      `
+    },
+    watch2: {
+      title: "Clip Two: Quick Context",
+      meta: "March 2, 2026 · Briefing · 4 min read",
+      youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      youtubeEmbed: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      commentary: `<p>Commentary for watch2 goes here.</p>`
+    },
+    watch3: {
+      title: "Clip Three: Why This Matters",
+      meta: "Feb 28, 2026 · Clip · 5 min read",
+      youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      youtubeEmbed: "https://www.youtube.com/embed/dQw4w9WgXcQ",
+      commentary: `<p>Commentary for watch3 goes here.</p>`
+    }
   };
-  ttsUtterance.onend = () => {
+
+  // ARTICLES
+  const articles = {
+    globalistBlueprint: {
+      title: "Operation “Epic Fury” Challenges Trump’s America First Framework",
+      meta: "March 3, 2026 · Deep Dive · 10 min read",
+      content: `
+        <p><strong>The White House says Operation “Epic Fury” is a precise campaign to eliminate an “imminent” threat.</strong> If that’s true, the evidence should be clear enough to show the American people. Instead, politicians and their media machines continue to blindly tell the public that the country was in danger, and action needed to be taken.</p>
+
+        <p>“America First” is not measured by how quickly we can escalate into action. It’s measured by whether American citizens are safer and better off when the dust settles — and whether the costs are justified <em>before</em> the bill comes due. This includes having a White House that transparently shows the cost, reasoning, and benefit.</p>
+
+        <h3>The “imminent threat” claim needs more than repetition</h3>
+        <p><strong>That’s a claim — not proof.</strong> Americans have heard “trust us” before. If the threat to the U.S. homeland was truly imminent, release as much supporting intelligence as possible (with sources protected) and explain the specific trigger: <em>what</em> was about to happen, <em>where</em>, and <em>against whom</em>.</p>
+
+        <blockquote>
+          “This was our last best chance to strike.” <span style="color:var(--text-muted)">— President Trump, as reported in live coverage</span>
+        </blockquote>
+
+        <h3>America First requires an end state — not mission creep</h3>
+        <p>Define victory in plain English:</p>
+        <ul>
+          <li>What must Iran stop doing — specifically — for operations to end?</li>
+          <li>What conditions trigger escalation or de-escalation?</li>
+          <li>What is the plan if strikes don’t change behavior?</li>
+        </ul>
+
+        <h3>The costs land on Americans first</h3>
+        <p>Energy markets, shipping lanes, cyber retaliation, and domestic security posture all have price tags. America First means those costs are not an afterthought — they’re the main point.</p>
+
+        <h3>America First means prove it — then limit it</h3>
+        <ol>
+          <li><strong>Declassify the best evidence</strong> supporting the “imminent threat” claim.</li>
+          <li><strong>State the end condition</strong> that ends operations and prevents mission creep.</li>
+          <li><strong>Publish a cost assessment</strong> that includes energy, shipping, cyber, and domestic security impacts.</li>
+        </ol>
+
+        <p>Otherwise, Epic Fury risks becoming another chapter in the same post-9/11 pattern: sweeping claims, thin transparency, and costs that compound for years — while families at home are told to accept it as “patriotism.”</p>
+      `
+    },
+
+    americaFirstIsrael: {
+      title: "America First — Except When It Comes to Israel?",
+      meta: "March 3, 2026 · Conservative Politics · 9 min read",
+      content: `
+        <p>For nearly a decade, the modern conservative movement has rallied around a simple, powerful idea: <strong>America First.</strong></p>
+        <p>Secure our border. Protect American jobs. End endless wars. Stop sending billions overseas while our own cities decay.</p>
+        <p><strong>Yet there is one glaring exception.</strong> When it comes to Israel — and particularly to the government of Prime Minister Benjamin Netanyahu — the America First instinct seems to vanish.</p>
+
+        <h3>The tension inside the movement</h3>
+        <p><em>America First was never supposed to mean “America First, unless.”</em></p>
+
+        <h3>The fiscal question</h3>
+        <p>America First was never just about totals. It’s about priorities and leverage.</p>
+
+        <h3>Strategic entanglement</h3>
+        <p>Does this commitment enhance American security directly — or does it risk drawing the U.S. deeper into regional conflicts that are not existential to the homeland?</p>
+
+        <h3>What would America First require?</h3>
+        <ul>
+          <li>Aid tied to clear reciprocal benchmarks.</li>
+          <li>No automatic escalatory commitments.</li>
+          <li>No exemptions from fiscal scrutiny.</li>
+        </ul>
+
+        <p><strong>Because in the end, America First either means something — or it doesn’t.</strong></p>
+      `
+    },
+
+    reclaimingPublicSquare: {
+      title: "Reclaiming the Public Square: Why Christians Can't Afford to Stay Silent",
+      meta: "June 10, 2025 · Faith & Culture · 7 min read",
+      content: `
+        <p>Many believers have been convinced that silence equals virtue. It doesn’t.</p>
+        <h3>Neutrality is a myth</h3>
+        <p>Every policy reflects a moral assumption. The only question is whose morality sets the rules.</p>
+        <h3>Witness requires presence</h3>
+        <p>Christian courage isn’t loudness — it’s steadiness.</p>
+      `
+    },
+
+    americaFirstTown: {
+      title: "What “America First” Actually Means for Your Town — Not Just Your Bumper Sticker",
+      meta: "June 7, 2025 · Economy · 9 min read",
+      content: `
+        <p>Slogans are easy. Policy is harder.</p>
+        <h3>Trade deals vs. Main Street</h3>
+        <p>If a policy benefits multinational corporations but hollows out local industry, it isn’t America First — it’s lobbyist first.</p>
+        <h3>Local resilience</h3>
+        <p>Real independence begins with resilient communities.</p>
+      `
+    },
+
+    fiveQuestionsCable: {
+      title: "Five Questions the Cable Networks Will Never Ask Their Defense Contractor Guests",
+      meta: "June 3, 2025 · Media · 5 min read",
+      content: `
+        <p>When the same sponsors fund the network and the “expert,” the interview is theater.</p>
+        <h3>The five questions</h3>
+        <ol>
+          <li>Who pays you — directly or indirectly?</li>
+          <li>What contracts does your employer hold right now?</li>
+          <li>What policy outcome benefits your balance sheet?</li>
+          <li>What’s the historical track record of your last 5 predictions?</li>
+          <li>What counter-arguments did you ignore to get here?</li>
+        </ol>
+      `
+    },
+
+    washingtonFarewell: {
+      title: "Washington's Farewell Address: The Warning We Were Given and Chose to Ignore",
+      meta: "May 29, 2025 · History · 8 min read",
+      content: `
+        <p>Washington didn’t write his farewell as a victory lap. He wrote it as a warning.</p>
+        <h3>Factions, foreign influence, and debt</h3>
+        <p>He cautioned against the habits that destroy republics: factional obsession, entangling alliances, and short-term thinking disguised as patriotism.</p>
+      `
+    },
+
+    rightToBearArms: {
+      title: "The Right to Bear Arms Is the Right That Protects All Others",
+      meta: "May 22, 2025 · 2nd Amendment · 10 min read",
+      content: `
+        <p>In a free society, rights aren’t granted by government — they’re recognized.</p>
+        <h3>Deterrence and citizenship</h3>
+        <p>The point is not violence. The point is restraint.</p>
+      `
+    }
+  };
+
+  /* =========================
+     ROUTING / NAV
+  ========================= */
+
+  function showPage(name) {
+    stopListen();
+
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const pageEl = document.getElementById('page-' + name);
+    if (pageEl) pageEl.classList.add('active');
+
+    document.querySelectorAll('.header-nav a').forEach(a => a.classList.remove('active'));
+    const navEl = document.getElementById('nav-' + name);
+    if (navEl) navEl.classList.add('active');
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(updateReadingProgress, 50);
+  }
+
+  function openArticle(articleKey) {
+    const article = articles[articleKey];
+    if (!article) return;
+
+    const titleEl = document.getElementById("article-title");
+    const metaEl = document.getElementById("article-meta");
+    const contentEl = document.getElementById("article-content");
+    if (!titleEl || !metaEl || !contentEl) return;
+
+    titleEl.innerText = article.title;
+    metaEl.innerText = article.meta;
+    contentEl.innerHTML = article.content;
+
+    showPage('article-detail');
+    setTimeout(updateReadingProgress, 50);
+  }
+
+  function openWatch(watchKey) {
+    const w = watches[watchKey];
+    if (!w) return;
+
+    document.getElementById("watch-title").innerText = w.title;
+    document.getElementById("watch-meta").innerText = w.meta;
+
+    document.getElementById("watch-embed").innerHTML = `
+      <iframe
+        src="${w.youtubeEmbed}"
+        title="${w.title}"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen>
+      </iframe>
+    `;
+
+    document.getElementById("watch-open-youtube").href = w.youtubeUrl;
+    document.getElementById("watch-commentary").innerHTML = w.commentary;
+
+    showPage('watch-detail');
+  }
+
+  /* =========================
+     READING PROGRESS
+  ========================= */
+  function updateReadingProgress() {
+    const progressWrap = document.getElementById('reading-progress');
+    const bar = document.getElementById('reading-progress-bar');
+    const article = document.getElementById('article-content');
+    const articlePage = document.getElementById('page-article-detail');
+
+    if (!progressWrap || !bar || !article || !articlePage || !articlePage.classList.contains('active')) {
+      if (progressWrap) progressWrap.style.display = 'none';
+      return;
+    }
+
+    progressWrap.style.display = 'block';
+
+    const rect = article.getBoundingClientRect();
+    const viewportH = window.innerHeight || document.documentElement.clientHeight;
+
+    const articleTopInDoc = window.scrollY + rect.top;
+    const articleHeight = article.offsetHeight;
+
+    const scrollPos = window.scrollY;
+    const start = articleTopInDoc - 140;
+    const end = articleTopInDoc + articleHeight - viewportH * 0.35;
+
+    const raw = (scrollPos - start) / (end - start);
+    const pct = Math.max(0, Math.min(1, raw)) * 100;
+
+    bar.style.width = pct.toFixed(2) + '%';
+  }
+
+  window.addEventListener('scroll', updateReadingProgress, { passive: true });
+  window.addEventListener('resize', updateReadingProgress);
+
+  /* =========================
+     TTS (LISTEN)
+  ========================= */
+  let ttsUtterance = null;
+  let ttsIsPaused = false;
+
+  function getReadableTextFromArticle() {
+    const contentEl = document.getElementById("article-content");
+    if (!contentEl) return "";
+    return contentEl.innerText
+      .replace(/\s+\n/g, "\n")
+      .replace(/\n{3,}/g, "\n\n")
+      .trim();
+  }
+
+  function updateListenUI(stateText, buttonText) {
+    const status = document.getElementById("listen-status");
+    const btn = document.getElementById("listen-btn");
+    if (status) status.textContent = stateText || "";
+    if (btn) btn.textContent = buttonText || "Listen";
+  }
+
+  function toggleListen() {
+    if (!("speechSynthesis" in window)) {
+      alert("Sorry — your browser doesn’t support text-to-speech.");
+      return;
+    }
+
+    const synth = window.speechSynthesis;
+
+    if (synth.speaking && !ttsIsPaused) {
+      synth.pause();
+      ttsIsPaused = true;
+      updateListenUI("Paused", "Resume");
+      return;
+    }
+    if (synth.speaking && ttsIsPaused) {
+      synth.resume();
+      ttsIsPaused = false;
+      updateListenUI("Playing", "Pause");
+      return;
+    }
+
+    const text = getReadableTextFromArticle();
+    if (!text) return;
+
+    ttsUtterance = new SpeechSynthesisUtterance(text);
+    ttsUtterance.rate = 1.0;
+    ttsUtterance.pitch = 1.0;
+
+    ttsUtterance.onstart = () => {
+      ttsIsPaused = false;
+      updateListenUI("Playing", "Pause");
+    };
+    ttsUtterance.onend = () => {
+      ttsIsPaused = false;
+      updateListenUI("", "Listen");
+    };
+    ttsUtterance.onerror = () => {
+      ttsIsPaused = false;
+      updateListenUI("Error", "Listen");
+    };
+
+    synth.cancel();
+    synth.speak(ttsUtterance);
+  }
+
+  function stopListen() {
+    if (!("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
     ttsIsPaused = false;
     updateListenUI("", "Listen");
-  };
-  ttsUtterance.onerror = () => {
-    ttsIsPaused = false;
-    updateListenUI("Error", "Listen");
-  };
+  }
 
-  synth.cancel(); // cancel anything else
-  synth.speak(ttsUtterance);
-}
-
-function stopListen() {
-  if (!("speechSynthesis" in window)) return;
-  window.speechSynthesis.cancel();
-  ttsIsPaused = false;
-  updateListenUI("", "Listen");
-}
-</script>
-
-</div>
+  // Init
+  document.getElementById('year').textContent = new Date().getFullYear();
+  setTimeout(updateReadingProgress, 50);
+  </script>
 </body>
 </html>
