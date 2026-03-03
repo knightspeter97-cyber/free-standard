@@ -7,6 +7,16 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
 
+   .article-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin: 12px 0 22px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(139,26,26,0.12);
+}
+
 /* ═══════════════════════════════════════════
    WORDPRESS WRAPPER RESET (prevents theme block spacing)
 ═══════════════════════════════════════════ */
@@ -1944,6 +1954,11 @@ footer svg circle {
       <div style="margin-bottom:18px;">
         <a class="btn btn-outline-white" onclick="showPage('articles')" style="padding:10px 18px;">← Back to Articles</a>
       </div>
+       <div class="article-actions">
+        <button class="btn btn-red" id="listen-btn" type="button" onclick="toggleListen()">Listen</button>
+        <button class="btn btn-outline-white" id="stop-btn" type="button" onclick="stopListen()" style="padding:10px 18px;">Stop</button>
+        <span id="listen-status" style="margin-left:12px;font-family:'Oswald',sans-serif;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);"></span>
+      </div>
       <div id="article-content" style="font-size:1.1rem;line-height:1.9;color: var(--text-body);">
         <!-- Article content loads here -->
       </div>
@@ -2346,6 +2361,7 @@ function openArticle(articleKey) {
 }
 
 function showPage(name) {
+   stopListen();
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
 
@@ -2355,6 +2371,76 @@ function showPage(name) {
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
   setTimeout(updateReadingProgress, 50);
+}
+   let ttsUtterance = null;
+let ttsIsPaused = false;
+
+function getReadableTextFromArticle() {
+  const contentEl = document.getElementById("article-content");
+  if (!contentEl) return "";
+  // Pull text only (no tags), clean spacing a bit
+  return contentEl.innerText.replace(/\s+\n/g, "\n").replace(/\n{3,}/g, "\n\n").trim();
+}
+
+function updateListenUI(stateText, buttonText) {
+  const status = document.getElementById("listen-status");
+  const btn = document.getElementById("listen-btn");
+  if (status) status.textContent = stateText || "";
+  if (btn) btn.textContent = buttonText || "Listen";
+}
+
+function toggleListen() {
+  if (!("speechSynthesis" in window)) {
+    alert("Sorry — your browser doesn’t support text-to-speech.");
+    return;
+  }
+
+  const synth = window.speechSynthesis;
+
+  // If currently speaking, toggle pause/resume
+  if (synth.speaking && !ttsIsPaused) {
+    synth.pause();
+    ttsIsPaused = true;
+    updateListenUI("Paused", "Resume");
+    return;
+  }
+  if (synth.speaking && ttsIsPaused) {
+    synth.resume();
+    ttsIsPaused = false;
+    updateListenUI("Playing", "Pause");
+    return;
+  }
+
+  // Start fresh
+  const text = getReadableTextFromArticle();
+  if (!text) return;
+
+  ttsUtterance = new SpeechSynthesisUtterance(text);
+  ttsUtterance.rate = 1.0;    // tweak if you want
+  ttsUtterance.pitch = 1.0;
+
+  ttsUtterance.onstart = () => {
+    ttsIsPaused = false;
+    updateListenUI("Playing", "Pause");
+  };
+  ttsUtterance.onend = () => {
+    ttsIsPaused = false;
+    updateListenUI("", "Listen");
+  };
+  ttsUtterance.onerror = () => {
+    ttsIsPaused = false;
+    updateListenUI("Error", "Listen");
+  };
+
+  synth.cancel(); // cancel anything else
+  synth.speak(ttsUtterance);
+}
+
+function stopListen() {
+  if (!("speechSynthesis" in window)) return;
+  window.speechSynthesis.cancel();
+  ttsIsPaused = false;
+  updateListenUI("", "Listen");
 }
 </script>
 
